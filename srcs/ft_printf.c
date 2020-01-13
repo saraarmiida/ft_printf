@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 14:34:25 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/10 16:28:10 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/13 16:59:40 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,5 @@ int		ft_printf(const char *format, ...)
 	printed = parse_format(format, menu, ap);
 	va_end(ap);
 	free(menu);
-	return (0);
+	return (printed);
 }

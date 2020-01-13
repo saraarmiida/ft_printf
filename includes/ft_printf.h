@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 18:11:40 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/10 15:38:35 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/13 16:53:39 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,9 @@ typedef struct	s_menu
 void			conversions(char c, t_menu *menu, va_list ap);
 void			modifiers(const char *format, t_menu *menu);
 int				ft_printf(const char *format, ...);
+void			c_char(t_menu *menu, va_list ap);
+void			c_string(t_menu *menu, va_list ap);
+void			c_pointer(t_menu *menu, va_list ap);
+void			ft_putchar_len(char c, int num);
 
 #endif

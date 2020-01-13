@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 13:12:21 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/08 16:47:59 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/13 13:53:31 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ char				*ft_strcjoin(char const *s1, char const *s2, char const c);
 char				*ft_strccpy(char *dst, const char *src, const char c);
 
 int					ft_getnbr(const char *str);
+int					ft_intbaselen(unsigned int n, unsigned int base);
 
 #endif
