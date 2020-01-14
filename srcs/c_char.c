@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 12:55:07 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/13 13:41:50 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/14 17:54:52 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_putchar_len(char c, int num)
 	}
 }
 
-void	c_char(t_menu *menu, va_list ap)
+void	c_char(t_menu *menu, va_list ap, char *str)
 {
 	unsigned char	c;
 	int				n;
@@ -50,31 +50,31 @@ void	c_char(t_menu *menu, va_list ap)
 	menu->printed++;	
 }
 
-void	c_string(t_menu *menu, va_list ap)
+void	c_string(t_menu *menu, va_list ap, char **str)
 {
 	char	*s;
+	char	*temp;
+	char	c;
 	int		n;
 
 	n = 0;
 	s = (char *)va_arg(ap, char *);
-	if (menu->width && menu->minus == 0)
+	if (menu->width)
 	{
+		c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
 		n = menu->width - ft_strlen(s);
-		if (menu->zero != 0)
-			ft_putchar_len('0', n);
-		else if (menu->zero == 0)
-			ft_putchar_len(' ', n);
-		ft_putstr(s);
-		menu->printed += n;
-	}
-	else if (menu->width && menu->minus == 1)
-	{
-		n = menu->width - ft_strlen(s);
-		ft_putstr(s);
-		ft_putchar_len(' ', n);
+		temp = ft_memset(ft_strnew(n), c, n);
+		temp[n + 1] = '\0';
+		if (menu->minus == 0)
+			*str = ft_strjoin(temp, s);
+		else if (menu->minus == 1)
+			*str = ft_strjoin(s, temp);
+		free(temp);
 		menu->printed += n;
 	}
 	else
-		ft_putstr(s);
+	{
+		*str = ft_strdup(s);
+	}
 	menu->printed += ft_strlen(s);
 }

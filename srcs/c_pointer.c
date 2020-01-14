@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 13:56:17 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/13 16:53:12 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/13 18:32:42 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char		*ft_itoa_base(unsigned long n, int base)
 	return (str);
 }
 
-void	c_pointer(t_menu *menu, va_list ap)
+void	c_pointer(t_menu *menu, va_list ap, char *str)
 {
 	int					n;
 	char				*s;

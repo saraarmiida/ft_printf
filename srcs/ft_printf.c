@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 14:34:25 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/13 16:59:40 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/14 18:45:54 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_menu	*create_menu(const char *format)
 	menu->conversions = "cspdiouxXfy%";
 	menu->i = 0;
 	menu->printed = 0;
+	menu->head = NULL;
 	zero_menu(menu);
 	return (menu);
 }
@@ -44,9 +45,21 @@ int		parse_format(const char *format, t_menu *menu, va_list ap)
 {
 	while (format[menu->i] != '\0')
 	{
-		if (format[menu->i] != '%' && format[menu->i] != '\0')
-			menu->printed += write(1, &format[menu->i], 1);
-		else if (format[menu->i++] == '%')
+		if (menu->head != NULL)
+		{
+			if (!(menu->link->next = (t_link *)malloc(sizeof(t_link))))
+			return (0);
+			menu->link = menu->link->next;
+		}
+		else if (!(menu->link = (t_link *)malloc(sizeof(t_link))))
+			return (0);
+		if (!(menu->link->str = ft_strndup(&format[menu->i], ft_strclen(format, menu->i, '%'))))
+			return (0);
+		menu->link->next = NULL;
+		if (menu->head == NULL)
+			menu->head = menu->link;
+		menu->i += ft_strlen(menu->link->str);
+		if (format[menu->i++] == '%')
 		{
 			if (!(ft_strchr(menu->symbols, format[menu->i])))
 				break ;
@@ -55,18 +68,44 @@ int		parse_format(const char *format, t_menu *menu, va_list ap)
 				if (ft_strchr(menu->conversions, format[menu->i]))
 				{
 					conversions(format[menu->i], menu, ap);
-					menu->i++;
 					zero_menu(menu);
 					break ;
 				}
 				else
 					modifiers(format, menu);
 			}
-			continue;
 		}
-		menu->i++;
 	}
 	return (menu->printed);
+}
+
+char	*joinlist(t_link *list)
+{
+	char	*str;
+	char	*temp;
+
+	str = NULL;
+	if (list->next != NULL)
+	{
+		while (list != NULL)
+		{
+			if (str == NULL)
+			{
+				str = ft_strjoin(list->str, list->next->str);
+				list = list->next->next;
+			}
+			else
+			{
+				temp = ft_strjoin(str, list->str);
+				free(str);
+				str = temp;
+				list = list->next;
+			}
+		}
+	}
+	else
+		str = list->str;
+	return (str);
 }
 
 int		ft_printf(const char *format, ...)
@@ -85,6 +124,7 @@ int		ft_printf(const char *format, ...)
 	if (ft_strlen(format) == 1 && format[0] == '%')
 		return (0);
 	printed = parse_format(format, menu, ap);
+	ft_putstr(joinlist(menu->head));
 	va_end(ap);
 	free(menu);
 	return (printed);
