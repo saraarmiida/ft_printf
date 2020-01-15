@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:30:19 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/15 16:54:36 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/15 17:05:12 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	c_unsinteger(t_menu *menu, va_list ap, char **str)
 		integer = 4294967295 + integer2;
 		printf("int: %u\n", integer);
 	}
-	s = ft_itoa(integer);
+	s = ft_itoa();
 	if (menu->precision != -1 && menu->precision != 0)
 	{
 		n = menu->precision - ft_baselen(integer, 10);
