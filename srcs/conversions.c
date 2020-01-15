@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 13:45:01 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/14 18:05:29 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/15 16:29:59 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,15 @@ void	conversions(char c, t_menu *menu, va_list ap)
 	menu->link = menu->link->next;
 	menu->link->next = NULL;
 	if (c == 'c')
-		c_char(menu, ap, menu->link->str);
+		c_char(menu, ap, &menu->link->str);
 	else if (c == 's')
 		c_string(menu, ap, &menu->link->str);
 	else if (c == 'p')
-		c_pointer(menu, ap, menu->link->str);
+		c_pointer(menu, ap, &menu->link->str);
+	else if (c == 'i' || c == 'd')
+		c_integer(menu, ap, &menu->link->str);
+	else if (c == 'u')
+		c_unsinteger(menu, ap, &menu->link->str);
 	menu->i++;
+	zero_menu(menu);
 }

@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 12:55:07 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/14 17:54:52 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/15 15:50:32 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,33 +21,29 @@ void	ft_putchar_len(char c, int num)
 	}
 }
 
-void	c_char(t_menu *menu, va_list ap, char *str)
+void	c_char(t_menu *menu, va_list ap, char **str)
 {
 	unsigned char	c;
+	char			a;
 	int				n;
+	char			*temp;
 
 	n = 0;
 	c = (unsigned char)va_arg(ap, int);
-	if (menu->width && menu->minus == 0)
+	if (menu->width)
 	{
+		a = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
 		n = menu->width - 1;
-		if (menu->zero != 0)
-			ft_putchar_len('0', n);
-		else if (menu->zero == 0)
-			ft_putchar_len(' ', n);
-		write(1, &c, 1);
-		menu->printed += n;
-	}
-	else if (menu->width && menu->minus == 1)
-	{
-		n = menu->width - 1;
-		write(1, &c, 1);
-		ft_putchar_len(' ', n);
-		menu->printed += n;
+		temp = ft_memset(ft_strnew(n + 1), a, n + 1);
+		if (menu->minus == 0)
+			temp[n] = c;
+		else if (menu->minus == 1)
+			temp[0] = c;
+		*str = ft_strdup(temp);
+		free(temp);
 	}
 	else
-		write(1, &c, 1);
-	menu->printed++;	
+		*str = ft_memset(ft_strnew(1), c, 1);
 }
 
 void	c_string(t_menu *menu, va_list ap, char **str)
@@ -59,22 +55,21 @@ void	c_string(t_menu *menu, va_list ap, char **str)
 
 	n = 0;
 	s = (char *)va_arg(ap, char *);
+	if (menu->precision != -1)
+		s = ft_strndup(s, (size_t)menu->precision);
 	if (menu->width)
 	{
 		c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
 		n = menu->width - ft_strlen(s);
 		temp = ft_memset(ft_strnew(n), c, n);
-		temp[n + 1] = '\0';
 		if (menu->minus == 0)
 			*str = ft_strjoin(temp, s);
 		else if (menu->minus == 1)
 			*str = ft_strjoin(s, temp);
 		free(temp);
-		menu->printed += n;
 	}
 	else
 	{
 		*str = ft_strdup(s);
 	}
-	menu->printed += ft_strlen(s);
 }

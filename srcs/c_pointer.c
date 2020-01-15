@@ -6,13 +6,13 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 13:56:17 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/13 18:32:42 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/15 16:01:43 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int	ft_baselen(unsigned long n, int base)
+int		ft_baselen(unsigned long n, int base)
 {
 	int len;
 
@@ -32,16 +32,18 @@ int	ft_baselen(unsigned long n, int base)
 	return (len);
 }
 
-char		*ft_itoa_base(unsigned long n, int base)
+char	*ft_itoa_base_hex(unsigned long n, int base)
 {
 	char	*str;
 	int		i;
 	int		len;
 
-	len = ft_baselen(n, base);
+	len = ft_baselen(n, base) + 2;
 	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
 		return (NULL);
 	i = len - 1;
+	str[0] = '0';
+	str[1] = 'x';
 	if (n == 0)
 		str[0] = 48;
 	while (n > 0)
@@ -54,39 +56,31 @@ char		*ft_itoa_base(unsigned long n, int base)
 	return (str);
 }
 
-void	c_pointer(t_menu *menu, va_list ap, char *str)
+void	c_pointer(t_menu *menu, va_list ap, char **str)
 {
 	int					n;
 	char				*s;
 	unsigned long long	pointer;
+	char				c;
+	char				*temp;
 
 	pointer = (unsigned long long)va_arg(ap, void *);
 	n = 0;
-	s = ft_itoa_base(pointer, 16);
-	if (menu->width && menu->minus == 0)
+	s = ft_itoa_base_hex(pointer, 16);
+	if (menu->precision != -1)
+		s = ft_strndup(s, (size_t)menu->precision + 2);
+	if (menu->width)
 	{
-		n = menu->width - ft_strlen(s) - 2;
-		if (menu->zero != 0)
-			ft_putchar_len('0', n);
-		else if (menu->zero == 0)
-			ft_putchar_len(' ', n);
-		ft_putstr("0x");
-		ft_putstr(s);
-		menu->printed += n;
-	}
-	else if (menu->width && menu->minus == 1)
-	{
-		n = menu->width - ft_strlen(s) - 2;
-		ft_putstr("0x");
-		ft_putstr(s);
-		ft_putchar_len(' ', n);
-		menu->printed += n;
+		c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
+		n = menu->width - ft_strlen(s);
+		temp = ft_memset(ft_strnew(n), c, n);
+		if (menu->minus == 0)
+			*str = ft_strjoin(temp, s);
+		else if (menu->minus == 1)
+			*str = ft_strjoin(s, temp);
+		free(temp);
 	}
 	else
-	{
-		ft_putstr("0x");
-		ft_putstr(s);
-	}
-	menu->printed += ft_strlen(s) + 2;
+		*str = ft_strdup(s);
 	free(s);
 }
