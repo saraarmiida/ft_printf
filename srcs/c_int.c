@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   c_integer.c                                        :+:      :+:    :+:   */
+/*   c_int.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:37:31 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/15 16:45:33 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:33:10 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@ void	get_length(int *integer, va_list ap, t_menu *menu)
 {
 	if (menu->length)
 	{
+		if (menu->length == 0)
+			*integer = (int)va_arg(ap, int);
 		if (menu->length == 1)
-			*integer = (char)va_arg(ap, int);
+			*integer = (signed char)va_arg(ap, int);
 		if (menu->length == 2)
 			*integer = (short)va_arg(ap, int);
 		if (menu->length == 3)
-			*integer = (long long)va_arg(ap, int);
+			*integer = (long long)va_arg(ap, long long);
 		if (menu->length == 4)
-			*integer = (long)va_arg(ap, int);
+			*integer = (long)va_arg(ap, long);
 	}
 }
 
@@ -35,17 +37,26 @@ void	c_integer(t_menu *menu, va_list ap, char **str)
 	char	c;
 	char	*temp;
 
-	if (menu->length)
-		get_length(&integer, ap, menu);
-	else
-		integer = va_arg(ap, int);
+	get_length(&integer, ap, menu);
 	s = ft_itoa(integer);
-	if (menu->precision != -1 && menu->precision != 0)
+	if (menu->precision != -1 && menu->precision != 0 && menu->precision > ft_strlen(s))
 	{
-		n = menu->precision - ft_baselen(integer, 10);
-		temp = ft_memset(ft_strnew(n), '0', n);
-		s = ft_strjoin(temp, s);
-		free(temp);
+		if (integer < 0)
+		{
+			n = menu->precision - ft_strlen(s) + 2;
+			temp = ft_memset(ft_strnew(n), '0', n);
+			temp[0] = '-';
+			s = ft_strjoin(temp, s + 1);
+			free(temp);
+		}
+		else
+		{
+			n = menu->precision - ft_strlen(s);
+			temp = ft_memset(ft_strnew(n), '0', n);
+			s = ft_strjoin(temp, s);
+			free(temp);
+			ft_putendl("SHIT");
+		}
 	}
 	if ((menu->plus || menu->space) && integer > 0)
 	{
@@ -53,7 +64,7 @@ void	c_integer(t_menu *menu, va_list ap, char **str)
 		s = ft_strjoin(temp, s);
 		free(temp);
 	}
-	if (menu->width)
+	if (menu->width && menu->width > ft_strlen(s))
 	{
 		c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
 		n = menu->width - ft_strlen(s);

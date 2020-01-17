@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:13:41 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/15 16:16:22 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/17 17:14:51 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,23 @@ void	zero_menu(t_menu *menu)
 	menu->space = 0;
 	menu->hash = 0;
 	menu->width = 0;
-	menu->precisiontf = 0;
+	menu->precisiontf = 6;
 	menu->precision = -1;
 	menu->length = 0;
+}
+
+void	debug(int n)
+{
+	ft_putstr("SHIT");
+	ft_putnbr(n);
+	ft_putendl("");
 }
 
 char	*joinlist(t_link *list, int *printed)
 {
 	char	*str;
 	char	*temp;
+	t_link	*templ;
 
 	str = NULL;
 	while (list != NULL)
@@ -41,7 +49,12 @@ char	*joinlist(t_link *list, int *printed)
 			free(str);
 			str = temp;
 		}
-		list = list->next;
+		// free(list->str);
+		if (list->next == NULL)
+			break ;
+		templ = list->next;
+		free(list);
+		list = templ;
 	}
 	*printed = ft_strlen(str);
 	return (str);

@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 18:11:40 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/15 16:32:17 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/16 17:20:15 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "../libft/includes/libft.h"
 #include <stdarg.h>
 #include <stdio.h>
+#include <math.h>
 
 typedef struct		s_link
 {
@@ -38,10 +39,10 @@ typedef struct	s_menu
 	int			space;
 	int			hash;
 	int			zero;
-	int			width; // 0 - 9
-	int			precisiontf; // .
-	int			precision; // .#
-	int			length; // LL HH H L
+	int			width;
+	int			precisiontf;
+	int			precision;
+	int			length;
 }				t_menu;
 
 void			conversions(char c, t_menu *menu, va_list ap);
@@ -58,5 +59,10 @@ int				parse_format(const char *format, t_menu *menu, va_list ap);
 char			*joinlist(t_link *list, int *printed);
 void			c_unsinteger(t_menu *menu, va_list ap, char **str);
 void			get_length(int *integer, va_list ap, t_menu *menu);
+void			c_uointeger(t_menu *menu, va_list ap, char **str);
+char			*ft_itoa_base(unsigned long n, int base);
+void			c_hex(t_menu *menu, va_list ap, char **str, char x);
+void			debug(int n);
+void			c_double(t_menu *menu, va_list ap, char **str);
 
 #endif

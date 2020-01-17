@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 14:34:25 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/15 16:16:14 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/17 17:02:37 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int		ft_printf(const char *format, ...)
 	int				printed;
 	va_list			ap;
 	t_menu			*menu;
+	int				mode;
+	char			*str;
 
 	menu = create_menu(format);
 	va_start(ap, format);
@@ -43,11 +45,17 @@ int		ft_printf(const char *format, ...)
 	}
 	if (ft_strlen(format) == 1 && format[0] == '%')
 		return (0);
-	if (parse_format(format, menu, ap))
+	mode = parse_format(format, menu, ap);
+	if (mode == 1)
 		return (0);
-	ft_putstr(joinlist(menu->head, &menu->printed));
+	else if (mode == 2)
+		str = (char *)format;
+	else
+		str = joinlist(menu->head, &menu->printed);
+	ft_putstr(str);
 	va_end(ap);
+	menu->printed = 2;
 	printed = menu->printed;
 	free(menu);
-	return (printed);
+	return (ft_strlen(str));
 }

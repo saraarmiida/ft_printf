@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   c_unsinteger.c                                     :+:      :+:    :+:   */
+/*   c_unsigned.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:30:19 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/15 17:05:12 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:40:24 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,33 +27,78 @@ void	get_ulength(unsigned int *integer, va_list ap, t_menu *menu)
 	}
 }
 
+int	ft_uintlen(unsigned int n)
+{
+	int len;
+
+	len = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+	{
+		len++;
+		n = n * -1;
+	}
+	while (n > 0)
+	{
+		n = n / 10;
+		len++;
+	}
+	return (len);
+}
+
+char	*ft_uitoa(unsigned int n)
+{
+	char	*str;
+	int		i;
+	int		len;
+
+	if (n < 0)
+		n = 4294967295 + n;
+	len = ft_uintlen(n);
+	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
+		return (NULL);
+	i = len - 1;
+	if (n == 0)
+		str[0] = 48;
+	while (n > 0)
+	{
+		str[i] = 48 + n % 10;
+		n = n / 10;
+		i--;
+	}
+	str[len] = '\0';
+	return (str);
+}
+
+
 void	c_unsinteger(t_menu *menu, va_list ap, char **str)
 {
 	int				n;
 	char			*s;
-	int				integer2;
 	unsigned int	integer;
 	char			c;
 	char			*temp;
 
-	if (menu->length)
-		get_ulength(&integer, ap, menu);
-	else
-		integer2 = va_arg(ap, int);
-	if (integer2 < 0)
+	if (menu->length == 0)
+		integer = (unsigned int)va_arg(ap, unsigned int);
+	else if (menu->length == 1)
+		integer = (unsigned char)va_arg(ap, unsigned int);
+	else if (menu->length == 2)
+		integer = (unsigned short)va_arg(ap, unsigned int);
+	else if (menu->length == 3)
+		integer = (unsigned long long)va_arg(ap, unsigned long long);
+	else if (menu->length == 4)
+		integer = (unsigned long)va_arg(ap, unsigned long);
+	s = ft_uitoa(integer);
+	if (menu->precision != -1 && menu->precision != 0 && menu->precision > ft_strlen(s))
 	{
-		integer = 4294967295 + integer2;
-		printf("int: %u\n", integer);
-	}
-	s = ft_itoa();
-	if (menu->precision != -1 && menu->precision != 0)
-	{
-		n = menu->precision - ft_baselen(integer, 10);
+		n = menu->precision - ft_strlen(s);
 		temp = ft_memset(ft_strnew(n), '0', n);
 		s = ft_strjoin(temp, s);
 		free(temp);
 	}
-	if (menu->width)
+	if (menu->width && menu->width > ft_strlen(s))
 	{
 		c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
 		n = menu->width - ft_strlen(s);
