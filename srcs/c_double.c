@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 13:01:25 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/17 16:02:38 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/21 18:08:48 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,32 +49,25 @@ long long	ft_pow(int num, int power)
 	i = 1;
 	res = num;
 	while (i++ < power)
-	{
 		res = res * num;
-	}
-	// printf("power: %d\nres: %lld\n", power, res);
 	return (res);
 }
 
-char	*ft_ftoa(double n, int precision)
+char	*ft_ftoa(long double n, int precision)
 {
 	long long int	length;
 	long long int	i;
 	long long int	inum;
-	double			fnum;
-	long long int	num;
+	long long int	fnum;
+	long long int	fnum2;
 	long long int	position;
 	long long int	sign;
+	long double		n2;
 	char			*str;
-	char			*str2;
 	
-	sign = 1;
-	if (n < 0)
-	{
-		sign = -1;
-		n *= -1;
-	}
-	inum = (int)n;
+	sign = (n < 0 ? -1 : 1);
+	n = (n < 0 ? -n : n);
+	inum = (long long int)n;
 	length = ft_intlen(inum);
 	position = length;
 	length = length + 1 + precision;
@@ -83,14 +76,19 @@ char	*ft_ftoa(double n, int precision)
 		length++;
 		position++;
 	}
-	fnum = (n - inum) * ft_pow(10, precision);
-	num = (n - inum) * ft_pow(10, precision + 1);
+	if (precision > 17)
+	{
+		n2 = (n - inum) * ft_pow(10, 17);
+		fnum = (n - inum) * ft_pow(10, 17);
+		fnum2 = (n2 - fnum) * ft_pow(10, precision - 16);
+	}
+	printf("n2: %Lf, fnum: %lld, fnum2: %lld\n", n2, fnum, fnum2);
+	fnum = (n - inum) * ft_pow(10, precision + 1);
 	i = length;
-	str = int_to_str(length, i, position, sign, inum, fnum);
-	str2 = ft_itoa(num);
-	if (str2[precision] >= '0' + 5)
+	str = int_to_str(length + 1, i, position, sign, inum, fnum);
+	if (str[length] >= '0' + 5)
 		str[length - 1] += 1;
-	free(str2);
+	str[length] = '\0';
 	return (str);
 }
 

@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 18:11:40 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/16 17:20:15 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/21 12:16:19 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ void			c_string(t_menu *menu, va_list ap, char **str);
 void			c_pointer(t_menu *menu, va_list ap, char **str);
 void			ft_putchar_len(char c, int num);
 void			c_integer(t_menu *menu, va_list ap, char **str);
-int				ft_baselen(unsigned long n, int base);
+int				ft_baselen(unsigned long long n, int base);
 void			zero_menu(t_menu *menu);
 int				parse_format(const char *format, t_menu *menu, va_list ap);
 char			*joinlist(t_link *list, int *printed);
-void			c_unsinteger(t_menu *menu, va_list ap, char **str);
-void			get_length(int *integer, va_list ap, t_menu *menu);
-void			c_uointeger(t_menu *menu, va_list ap, char **str);
-char			*ft_itoa_base(unsigned long n, int base);
+void			c_unsigned(t_menu *menu, va_list ap, char **str);
+void			get_length(long long int *integer, va_list ap, t_menu *menu);
+void			c_octal(t_menu *menu, va_list ap, char **str);
+char			*ft_itoa_base(unsigned long long n, int base);
 void			c_hex(t_menu *menu, va_list ap, char **str, char x);
 void			debug(int n);
 void			c_double(t_menu *menu, va_list ap, char **str);

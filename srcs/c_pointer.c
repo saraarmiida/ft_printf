@@ -6,13 +6,13 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 13:56:17 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/15 16:01:43 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/20 17:04:29 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int		ft_baselen(unsigned long n, int base)
+int		ft_baselen(unsigned long long n, int base)
 {
 	int len;
 

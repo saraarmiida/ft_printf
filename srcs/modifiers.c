@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 13:30:29 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/15 16:02:05 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/20 17:15:02 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,11 @@ void	length(const char *format, t_menu *menu)
 
 void	modifiers(const char *format, t_menu *menu)
 {
-	flags(format, menu);
-	width(format, menu);
-	precision(format, menu);
-	length(format, menu);
+	while (ft_strchr("#-+ .0123456789hLl", format[menu->i]))
+	{
+		flags(format, menu);
+		width(format, menu);
+		precision(format, menu);
+		length(format, menu);
+	}
 }

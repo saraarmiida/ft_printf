@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_intlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spentti <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 17:52:56 by spentti           #+#    #+#             */
-/*   Updated: 2019/10/25 17:53:23 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/20 13:31:14 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_intlen(int n)
+#include "includes/libft.h"
+
+int	ft_intlen(long long int n)
 {
 	int len;
 

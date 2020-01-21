@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:14:52 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/17 17:37:51 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/20 12:29:27 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,12 @@ int		parse_format(const char *format, t_menu *menu, va_list ap)
 	while (format[menu->i] != '\0')
 	{
 		if (create_link(menu, format, '%'))
-			return (1);
-		if (format[menu->i++] == '%' && format[menu->i + 1] != '%')
 		{
+			return (1);
+		}
+		if (format[menu->i] == '%' && format[menu->i + 1] != '%')
+		{
+			menu->i++;
 			if (!(ft_strchr(menu->symbols, format[menu->i])))
 				break ;
 			if (!(ft_strchr(menu->conversions, format[menu->i])))
@@ -48,16 +51,16 @@ int		parse_format(const char *format, t_menu *menu, va_list ap)
 			if (ft_strchr(menu->conversions, format[menu->i]))
 				conversions(format[menu->i], menu, ap);
 		}
-		else if (format[menu->i++] == '%' && format[menu->i + 1] == '%')
+		else if (format[menu->i] == '%' && format[menu->i + 1] == '%')
 		{
 			if (!(menu->link->next = (t_link *)malloc(sizeof(t_link))))
 				return (1);
 			menu->link = menu->link->next;
+			menu->link->next = NULL;
 			if (!(menu->link->str = ft_strnew(1)))
 				return (1);
 			menu->link->str[0] = '%';
-			menu->link->next = NULL;
-			menu->i += ft_strlen(menu->link->str);
+			menu->i += 2;
 		}
 		
 	}

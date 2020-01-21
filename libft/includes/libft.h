@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 13:12:21 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/13 13:53:31 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/20 14:50:42 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
-char				*ft_itoa(int n);
+char				*ft_itoa(long long int n);
 void				ft_putchar(char c);
 void				ft_putendl(char const *s);
 void				ft_putnbr(int n);
@@ -94,7 +94,7 @@ int					ft_isupper(int c);
 int					ft_islower(int c);
 int					ft_wordcount(char const *s, char c);
 int					ft_strclen(char const *s, int i, char c);
-int					ft_intlen(int n);
+int					ft_intlen(long long int n);
 
 char				*ft_strndup(const char *str, size_t n);
 char				*ft_strnjoin(char const *s1, char const *s2, size_t n);

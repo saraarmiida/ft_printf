@@ -6,13 +6,13 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:00:23 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/16 14:39:23 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/20 17:27:03 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-char	*ft_itoa_base(unsigned long n, int base)
+char	*ft_itoa_base(unsigned long long n, int base)
 {
 	char	*str;
 	int		i;
@@ -34,13 +34,13 @@ char	*ft_itoa_base(unsigned long n, int base)
 	return (str);
 }
 
-void	c_uointeger(t_menu *menu, va_list ap, char **str)
+void	c_octal(t_menu *menu, va_list ap, char **str)
 {
-	int				n;
-	char			*s;
-	unsigned long	integer;
-	char			c;
-	char			*temp;
+	int					n;
+	char				*s;
+	unsigned long long	integer;
+	char				c;
+	char				*temp;
 
 	if (menu->length == 0)
 		integer = (unsigned int)va_arg(ap, unsigned int);
@@ -62,18 +62,22 @@ void	c_uointeger(t_menu *menu, va_list ap, char **str)
 		s = ft_strjoin(temp, s);
 		free(temp);
 	}
+	if (menu->hash == 1 && s[0] != '0')
+	{
+		temp = ft_strdup("0");
+		s = ft_strjoin(temp, s);
+	}
 	if (menu->width && menu->width > ft_strlen(s))
 	{
-		c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
+		c = (menu->minus == 0 && menu->zero != 0 && menu->precision == -1 ? '0' : ' ');
 		n = menu->width - ft_strlen(s);
 		temp = ft_memset(ft_strnew(n), c, n);
 		if (menu->minus == 0)
-			*str = ft_strjoin(temp, s);
+			s = ft_strjoin(temp, s);
 		else if (menu->minus == 1)
-			*str = ft_strjoin(s, temp);
+			s = ft_strjoin(s, temp);
 		free(temp);
 	}
-	else
-		*str = ft_strdup(s);
+	*str = ft_strdup(s);
 	free(s);
 }

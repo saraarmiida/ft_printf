@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spentti <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 13:16:48 by spentti           #+#    #+#             */
-/*   Updated: 2019/10/25 13:29:01 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/20 14:49:52 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_itoa(int n)
+char		*ft_itoa(long long int n)
 {
 	char	*str;
 	int		i;

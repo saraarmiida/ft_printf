@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:30:19 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/16 14:40:24 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/21 12:28:53 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	get_ulength(unsigned int *integer, va_list ap, t_menu *menu)
 	}
 }
 
-int	ft_uintlen(unsigned int n)
+int	ft_uintlen(unsigned long long int n)
 {
 	int len;
 
@@ -47,7 +47,7 @@ int	ft_uintlen(unsigned int n)
 	return (len);
 }
 
-char	*ft_uitoa(unsigned int n)
+char	*ft_uitoa(unsigned long long int n)
 {
 	char	*str;
 	int		i;
@@ -72,13 +72,13 @@ char	*ft_uitoa(unsigned int n)
 }
 
 
-void	c_unsinteger(t_menu *menu, va_list ap, char **str)
+void	c_unsigned(t_menu *menu, va_list ap, char **str)
 {
-	int				n;
-	char			*s;
-	unsigned int	integer;
-	char			c;
-	char			*temp;
+	int					n;
+	char				*s;
+	unsigned long long	integer;
+	char				c;
+	char				*temp;
 
 	if (menu->length == 0)
 		integer = (unsigned int)va_arg(ap, unsigned int);
@@ -100,7 +100,7 @@ void	c_unsinteger(t_menu *menu, va_list ap, char **str)
 	}
 	if (menu->width && menu->width > ft_strlen(s))
 	{
-		c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
+		c = (menu->minus == 0 && menu->zero != 0 && menu->precision == -1 ? '0' : ' ');
 		n = menu->width - ft_strlen(s);
 		temp = ft_memset(ft_strnew(n), c, n);
 		if (menu->minus == 0)

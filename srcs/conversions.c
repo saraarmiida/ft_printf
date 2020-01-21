@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 13:45:01 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/16 14:42:18 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/21 12:18:50 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	conversions(char c, t_menu *menu, va_list ap)
 	else if (c == 'i' || c == 'd')
 		c_integer(menu, ap, &menu->link->str);
 	else if (c == 'u')
-		c_unsinteger(menu, ap, &menu->link->str);
+		c_unsigned(menu, ap, &menu->link->str);
 	else if (c == 'o')
-		c_uointeger(menu, ap, &menu->link->str);
+		c_octal(menu, ap, &menu->link->str);
 	else if (c == 'x' || c == 'X')
 		c_hex(menu, ap, &menu->link->str, c);
 	else if (c == 'f')
