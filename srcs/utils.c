@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:13:41 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/17 17:14:51 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/22 16:44:54 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	zero_menu(t_menu *menu)
 	menu->space = 0;
 	menu->hash = 0;
 	menu->width = 0;
-	menu->precisiontf = 6;
 	menu->precision = -1;
 	menu->length = 0;
 }

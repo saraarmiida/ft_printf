@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 13:01:25 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/21 18:08:48 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/22 18:16:14 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,41 +55,38 @@ long long	ft_pow(int num, int power)
 
 char	*ft_ftoa(long double n, int precision)
 {
-	long long int	length;
-	long long int	i;
-	long long int	inum;
-	long long int	fnum;
-	long long int	fnum2;
-	long long int	position;
-	long long int	sign;
-	long double		n2;
-	char			*str;
-	
-	sign = (n < 0 ? -1 : 1);
-	n = (n < 0 ? -n : n);
-	inum = (long long int)n;
-	length = ft_intlen(inum);
-	position = length;
-	length = length + 1 + precision;
-	if (sign == -1)
+	long long	inum;
+	long double	n2;
+	char		*str1;
+	char		*str2;
+	int			i;
+	char		*temp;
+
+	inum = (long long)n;
+	str1 = ft_itoa(inum);
+	i = 0;
+	n2 = n - inum;
+	if (!(str2 = (char *)malloc(sizeof(char) * precision + 1)))
+		return (NULL);
+	while (i < precision)
 	{
-		length++;
-		position++;
+		inum = (long long)(n2 * 10);
+		str2[i] = inum + '0';
+		n2 = n2 * 10 - inum;
+		i++;
 	}
-	if (precision > 17)
+	str2[i] = '\0';
+	printf(" inum: %lli\n str2: %s\n", inum, str2);
+	inum = (long long)(n2 * 10);
+	if (inum >= 5)
+		str2[i - 1] += 1;
+	if (precision != 0)
 	{
-		n2 = (n - inum) * ft_pow(10, 17);
-		fnum = (n - inum) * ft_pow(10, 17);
-		fnum2 = (n2 - fnum) * ft_pow(10, precision - 16);
+		temp = ft_strjoin(str1, ".");
+		free(str1);
+		str1 = temp;
 	}
-	printf("n2: %Lf, fnum: %lld, fnum2: %lld\n", n2, fnum, fnum2);
-	fnum = (n - inum) * ft_pow(10, precision + 1);
-	i = length;
-	str = int_to_str(length + 1, i, position, sign, inum, fnum);
-	if (str[length] >= '0' + 5)
-		str[length - 1] += 1;
-	str[length] = '\0';
-	return (str);
+	return (ft_strjoin(str1, str2));
 }
 
 void	c_double(t_menu *menu, va_list ap, char **str)

@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 18:11:40 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/21 12:16:19 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/22 18:08:17 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,25 @@ typedef struct		s_link
 	struct s_link	*next;
 }					t_link;
 
-typedef struct	s_menu
+typedef struct		s_menu
 {
-	const char	*symbols;
-	const char	*format;
-	const char 	*conversions;
-	t_link		*head;
-	t_link		*link;
-	int			i;
-	int			printed;
-	int			minus;
-	int			plus;
-	int			space;
-	int			hash;
-	int			zero;
-	int			width;
-	int			precisiontf;
-	int			precision;
-	int			length;
-}				t_menu;
+	const char		*symbols;
+	const char		*format;
+	const char 		*conversions;
+	t_link			*head;
+	t_link			*link;
+	int				i;
+	int				printed;
+	int				minus;
+	int				plus;
+	int				space;
+	int				hash;
+	int				zero;
+	int				width;
+	int				precisiontf;
+	int				precision;
+	int				length;
+}					t_menu;
 
 void			conversions(char c, t_menu *menu, va_list ap);
 void			modifiers(const char *format, t_menu *menu);
