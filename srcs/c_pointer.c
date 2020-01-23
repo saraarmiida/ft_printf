@@ -64,23 +64,31 @@ void	c_pointer(t_menu *menu, va_list ap, char **str)
 	char				c;
 	char				*temp;
 
+	if (menu->width == -2)
+		menu->width = (int)va_arg(ap, int);
+	if (menu->precision == -2)
+		menu->precision = (int)va_arg(ap, int);
 	pointer = (unsigned long long)va_arg(ap, void *);
 	n = 0;
 	s = ft_itoa_base_hex(pointer, 16);
-	if (menu->precision != -1)
+	if (menu->precision != -1 && menu->precision != 0 && menu->precision > ft_strlen(s))
 		s = ft_strndup(s, (size_t)menu->precision + 2);
-	if (menu->width)
+	if (menu->width && ft_strlen(s) < menu->width)
 	{
 		c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
 		n = menu->width - ft_strlen(s);
 		temp = ft_memset(ft_strnew(n), c, n);
 		if (menu->minus == 0)
-			*str = ft_strjoin(temp, s);
+			s = ft_strjoin(temp, s);
 		else if (menu->minus == 1)
-			*str = ft_strjoin(s, temp);
+			s = ft_strjoin(s, temp);
 		free(temp);
+		if (menu->minus == 0 && menu->zero != 0)
+		{
+			s[1] = 'x';
+			s[n + 1] = '0';
+		}
 	}
-	else
-		*str = ft_strdup(s);
+	*str = ft_strdup(s);
 	free(s);
 }

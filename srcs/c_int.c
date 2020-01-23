@@ -40,6 +40,10 @@ void	c_integer(t_menu *menu, va_list ap, char **str)
 	char				c;
 	char				*temp;
 
+	if (menu->width == -2)
+		menu->width = (int)va_arg(ap, int);
+	if (menu->precision == -2)
+		menu->precision = (int)va_arg(ap, int);
 	get_length(&integer, ap, menu);
 	s = ft_itoa(integer);
 	if (menu->precision != -1 && menu->precision != 0 && menu->precision > ft_strlen(s))

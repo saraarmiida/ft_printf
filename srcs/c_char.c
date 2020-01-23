@@ -30,6 +30,8 @@ void	c_char(t_menu *menu, va_list ap, char **str)
 
 	n = 0;
 	c = (unsigned char)va_arg(ap, int);
+	if (menu->width == -2)
+		menu->width = (int)va_arg(ap, int);
 	if (menu->width)
 	{
 		a = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
@@ -54,10 +56,14 @@ void	c_string(t_menu *menu, va_list ap, char **str)
 	int		n;
 
 	n = 0;
+	if (menu->width == -2)
+		menu->width = (int)va_arg(ap, int);
+	if (menu->precision == -2)
+		menu->precision = (int)va_arg(ap, int);
 	s = (char *)va_arg(ap, char *);
-	if (menu->precision != -1)
+	if (menu->precision != -1 && menu->precision != 0 && menu->precision > ft_strlen(s))
 		s = ft_strndup(s, (size_t)menu->precision);
-	if (menu->width)
+	if (menu->width && menu->width > ft_strlen(s))
 	{
 		c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
 		n = menu->width - ft_strlen(s);

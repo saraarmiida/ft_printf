@@ -12,35 +12,6 @@
 
 #include "../includes/ft_printf.h"
 
-char	*int_to_str(long long length, long long i, long long position, long long sign, long long inum, long long fnum)
-{
-	char *str;
-
-	if (!(str = (char *)malloc(sizeof(char) * length)))
-		return (NULL);
-	while (i >= 0) 
-	{
-		if (i == length)
-			str[i] = '\0';
-		else if (i == position)
-			str[i] = '.';
-		else if (sign == -1 && i == 0)
-			str[i] = '-';
-		else if (i > position)
-		{
-			str[i] = (fnum % 10) + '0';
-			fnum /= 10;
-		}
-		else if (i < position)
-		{
-			str[i] = (inum % 10) + '0';
-			inum /= 10;
-		}
-		i--;
-	}
-	return (str);
-}
-
 long long	ft_pow(int num, int power)
 {
 	long long	res;
@@ -62,10 +33,11 @@ char	*ft_ftoa(long double n, int precision)
 	int			i;
 	char		*temp;
 
-	inum = (long long)n;
+	n2 = (n < 0 ? -n : n);
+	inum = (long long)n2;
 	str1 = ft_itoa(inum);
 	i = 0;
-	n2 = n - inum;
+	n2 = n2 - inum;
 	if (!(str2 = (char *)malloc(sizeof(char) * precision + 1)))
 		return (NULL);
 	while (i < precision)
@@ -76,7 +48,6 @@ char	*ft_ftoa(long double n, int precision)
 		i++;
 	}
 	str2[i] = '\0';
-	printf(" inum: %lli\n str2: %s\n", inum, str2);
 	inum = (long long)(n2 * 10);
 	if (inum >= 5)
 		str2[i - 1] += 1;
@@ -86,7 +57,16 @@ char	*ft_ftoa(long double n, int precision)
 		free(str1);
 		str1 = temp;
 	}
-	return (ft_strjoin(str1, str2));
+	if (n < 0)
+	{
+		temp = ft_strjoin("-", str1);
+		free(str1);
+		str1 = temp;
+	}
+	temp = ft_strjoin(str1, str2);
+	free(str1);
+	free(str2);
+	return (temp);
 }
 
 void	c_double(t_menu *menu, va_list ap, char **str)
@@ -97,12 +77,15 @@ void	c_double(t_menu *menu, va_list ap, char **str)
 	char		c;
 	char		*temp;
 
+	if (menu->width == -2)
+		menu->width = (int)va_arg(ap, int);
+	if (menu->precision == -2)
+		menu->precision = (int)va_arg(ap, int);
 	if (menu->length)
 		num = (long double)va_arg(ap, long double);
 	else
 		num = (long double)va_arg(ap, double);
-	if (menu->precision == -1)
-		menu->precision = 6;
+	menu->precision = (menu->precision == -1 ? 6 : menu->precision);
 	s = ft_ftoa(num, menu->precision);
 	if (menu->precision != -1 && menu->precision != 0 && menu->precision > ft_strlen(s))
 	{

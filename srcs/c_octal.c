@@ -42,6 +42,10 @@ void	c_octal(t_menu *menu, va_list ap, char **str)
 	char				c;
 	char				*temp;
 
+	if (menu->width == -2)
+		menu->width = (int)va_arg(ap, int);
+	if (menu->precision == -2)
+		menu->precision = (int)va_arg(ap, int);
 	if (menu->length == 0)
 		integer = (unsigned int)va_arg(ap, unsigned int);
 	else if (menu->length == 1)

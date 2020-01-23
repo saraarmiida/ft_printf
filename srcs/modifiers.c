@@ -34,6 +34,13 @@ void	flags(const char *format, t_menu *menu)
 
 void	width(const char *format, t_menu *menu)
 {
+	if (format[menu->i] == '*')
+	{	
+		menu->width = -2;
+		menu->i++;
+		while (format[menu->i] >= '0' && format[menu->i] <= '9')
+			menu->i++;
+	}
 	if (format[menu->i] >= '0' && format[menu->i] <= '9')
 	{
 		menu->width = ft_atoi(&format[menu->i]);
@@ -47,9 +54,17 @@ void	precision(const char *format, t_menu *menu)
 	if (format[menu->i] == '.')
 	{
 		menu->i++;
-		menu->precision = ft_atoi(&format[menu->i]);
-		while (format[menu->i] >= '0' && format[menu->i] <= '9')
+		if (format[menu->i] == '*')
+		{
+			menu->precision = -2;
 			menu->i++;
+		}
+		else
+		{
+			menu->precision = ft_atoi(&format[menu->i]);
+			while (format[menu->i] >= '0' && format[menu->i] <= '9')
+				menu->i++;
+		}
 	}
 }
 
@@ -74,7 +89,7 @@ void	length(const char *format, t_menu *menu)
 
 void	modifiers(const char *format, t_menu *menu)
 {
-	while (ft_strchr("#-+ .0123456789hLl", format[menu->i]))
+	while (ft_strchr("*#-+ .0123456789hLl", format[menu->i]))
 	{
 		flags(format, menu);
 		width(format, menu);

@@ -90,7 +90,7 @@ void	p(void)
  	int		a;
 
  	pointer = &test;
- 	//printf("0x%s\n", test = ft_itoa_base((unsigned long long)pointer, 16));
+ 	printf("0x%s\n", test = ft_itoa_base((unsigned long long)pointer, 16));
 	
  	ft_printf("\n****** TEST #1 ******\n\n");
  	ft_printf("'%p'\n", pointer);
@@ -99,8 +99,8 @@ void	p(void)
  	ft_printf("'% p'\n", &test);
  	printf("'% p'\n", &test);
 
- 	ft_printf("'%10 p'\n", &test);
  	printf("'%10 p'\n", &test);
+ 	ft_printf("'%10 p'\n", &test);
 
  	ft_printf("'%15p'\n", &a);
  	printf("'%15p'\n", &a);
@@ -115,7 +115,7 @@ void	p(void)
  	printf("'%*p'\n", 20, &a);
 
  	ft_printf("'%*20.4p'\n", 20, &a);
- 	printf("'%*20.4p'\n", 20, &test);
+ 	printf("'%*20.4p'\n", 20, &a);
 
  	//printf("PRINTED: %d\n", ft_printf("'\nUNEDEFINED BHEAVIOUR PRECISION \n%20.30p'\n'%20p'\n", &test, &test));
  	//printf("PRINTED: %d\n", printf("'\nUNEDEFINED BHEAVIOUR PRECISION \n%20.30p'\n'%20p'\n", &test, &test));
@@ -1174,10 +1174,10 @@ int	main(void)
 	// c();
 	// s();
 	// p();
-	// id();
-	// o();
-	// u();
+	id();
+	o();
+	u();
 	// x();
-	f();	
+	// f();	
 	return (0);
 }
