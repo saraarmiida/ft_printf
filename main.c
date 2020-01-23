@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 12:13:36 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/22 18:19:51 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/23 17:45:58 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ int	main(void)
 	double f = 432232342.01938409238;
 	double f_n = -432232342.01938409238;
 
-	*age = 3;
+	*age = 3687;
 	name = "Vekkuli";
 	voi = "voivoi";
 	class = 'f';
 	fnum = 267199.77656565655;
-	printf("printf:    '%-10 i'\n           '%-10 lli'\n", i, lli);
-	ft_printf("ft_printf: '%-10 i'\n           '%-10 lli'\n", i, lli);
+	printf("printf:    '%#030x'\n", *age);
+	ft_printf("ft_printf: '%#030x'\n", *age);
 	return (0);
 }

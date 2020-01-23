@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:37:31 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/20 16:49:00 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/23 17:17:06 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	c_integer(t_menu *menu, va_list ap, char **str)
 	long long int		integer;
 	char				c;
 	char				*temp;
+	char				*temp2;
 
 	if (menu->width == -2)
 		menu->width = (int)va_arg(ap, int);
@@ -64,11 +65,12 @@ void	c_integer(t_menu *menu, va_list ap, char **str)
 			free(temp);
 		}
 	}
-	if ((menu->plus || menu->space) && integer > 0 && menu->precision != -1)
+	if ((menu->plus || menu->space) && integer > 0)
 	{
-		temp = ft_strdup(menu->plus == 1 ? "+" : " ");
-		s = ft_strjoin(temp, s);
-		free(temp);
+		temp2 = (menu->plus == 1 ? "+" : " ");
+		temp = ft_strjoin(temp2, s);
+		free(s);
+		s = temp;
 	}
 	if (menu->width && menu->width > ft_strlen(s))
 	{
@@ -79,14 +81,6 @@ void	c_integer(t_menu *menu, va_list ap, char **str)
 			s = ft_strjoin(temp, s);
 		else if (menu->minus == 1)
 			s = ft_strjoin(s, temp);
-		free(temp);
-	}
-	if ((menu->plus || menu->space) && integer > 0 && menu->precision == -1 && menu->width > ft_intlen(integer))
-		s[0] = menu->plus == 1 ? '+' : ' ';
-	else if ((menu->plus || menu->space) && integer > 0 && menu->precision == -1)
-	{
-		temp = ft_strdup(menu->plus == 1 ? "+" : " ");
-		s = ft_strjoin(temp, s);
 		free(temp);
 	}
 	*str = ft_strdup(s);

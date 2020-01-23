@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 14:34:25 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/20 17:13:37 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/23 18:07:00 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ int		ft_printf(const char *format, ...)
 	menu->printed = 2;
 	printed = menu->printed;
 	free(menu);
+	while (1);
 	return (ft_strlen(str));
 }

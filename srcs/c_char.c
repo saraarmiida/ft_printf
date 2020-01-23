@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 12:55:07 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/15 15:50:32 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/23 16:53:08 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,18 @@ void	c_string(t_menu *menu, va_list ap, char **str)
 	if (menu->precision == -2)
 		menu->precision = (int)va_arg(ap, int);
 	s = (char *)va_arg(ap, char *);
-	if (menu->precision != -1 && menu->precision != 0 && menu->precision > ft_strlen(s))
+	if (menu->precision > ft_strlen(s))
 		s = ft_strndup(s, (size_t)menu->precision);
-	if (menu->width && menu->width > ft_strlen(s))
+	if (menu->width > ft_strlen(s))
 	{
 		c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
 		n = menu->width - ft_strlen(s);
 		temp = ft_memset(ft_strnew(n), c, n);
 		if (menu->minus == 0)
-			*str = ft_strjoin(temp, s);
+			s = ft_strjoin(temp, s);
 		else if (menu->minus == 1)
-			*str = ft_strjoin(s, temp);
+			s = ft_strjoin(s, temp);
 		free(temp);
 	}
-	else
-	{
-		*str = ft_strdup(s);
-	}
+	*str = ft_strdup(s);
 }
