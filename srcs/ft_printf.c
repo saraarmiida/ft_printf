@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 14:34:25 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/23 18:07:00 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/24 19:09:38 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,10 @@ int		ft_printf(const char *format, ...)
 	va_start(ap, format);
 	menu->format = format;
 	if (!format[0])
-	{
 		return (0);
-	}
 	if (ft_strlen(format) == 1 && format[0] == '%')
 		return (0);
-	mode = parse_format(format, menu, ap);
-	if (mode == 1)
+	if ((mode = parse_format(format, menu, ap)) == 1)
 		return (0);
 	else if (mode == 2)
 		str = (char *)format;
@@ -57,6 +54,5 @@ int		ft_printf(const char *format, ...)
 	menu->printed = 2;
 	printed = menu->printed;
 	free(menu);
-	while (1);
 	return (ft_strlen(str));
 }

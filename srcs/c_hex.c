@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:55:50 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/23 18:05:29 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/24 19:06:57 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,16 @@
 
 void	get_length_hex(unsigned long long *integer, va_list ap, t_menu *menu)
 {
-	if (menu->length)
-	{
-		if (menu->length == 1)
-			*integer = (unsigned char)va_arg(ap, unsigned int);
-		else if (menu->length == 2)
-			*integer = (unsigned short)va_arg(ap, unsigned int);
-		else if (menu->length == 3)
-			*integer = (unsigned long long)va_arg(ap, unsigned long long);
-		else if (menu->length == 4)
-			*integer = (unsigned long)va_arg(ap, unsigned long);
-	}
-	else if (menu->length == 0)
+	if (menu->length == 0)
 		*integer = (unsigned int)va_arg(ap, unsigned int);
+	else if (menu->length == 1)
+		*integer = (unsigned char)va_arg(ap, unsigned int);
+	else if (menu->length == 2)
+		*integer = (unsigned short)va_arg(ap, unsigned int);
+	else if (menu->length == 3)
+		*integer = (unsigned long long)va_arg(ap, unsigned long long);
+	else if (menu->length == 4)
+		*integer = (unsigned long)va_arg(ap, unsigned long);
 }
 
 void	get_width(t_menu *menu, char **s)

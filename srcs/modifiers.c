@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 13:30:29 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/20 17:15:02 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/24 18:20:16 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	flags(const char *format, t_menu *menu)
 void	width(const char *format, t_menu *menu)
 {
 	if (format[menu->i] == '*')
-	{	
+	{
 		menu->width = -2;
 		menu->i++;
 		while (format[menu->i] >= '0' && format[menu->i] <= '9')

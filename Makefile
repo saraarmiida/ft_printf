@@ -6,13 +6,13 @@
 #    By: spentti <spentti@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/10 14:03:19 by spentti           #+#    #+#              #
-#    Updated: 2020/01/23 17:49:56 by spentti          ###   ########.fr        #
+#    Updated: 2020/01/24 18:45:17 by spentti          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = printf                                                                              
 FLAGS = -Wall -Wextra -Werror
-SRC = srcs/*.c main2.c
+SRC = srcs/*.c main.c
 
 all: $(NAME)
 

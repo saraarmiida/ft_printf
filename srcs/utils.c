@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:13:41 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/22 16:44:54 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/24 18:21:14 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char	*joinlist(t_link *list, int *printed)
 			free(str);
 			str = temp;
 		}
-		// free(list->str);
 		if (list->next == NULL)
 			break ;
 		templ = list->next;

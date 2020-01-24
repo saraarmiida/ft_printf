@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 12:13:36 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/23 17:45:58 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/24 19:14:14 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	main(void)
 	char	*voi;
 	char	class;
 	double	fnum;
-	int	i = 3;
+	int	i = -3;
  	unsigned long long int lli = 6964321;
 	long double d = 3.1415926535;
- 	unsigned long long int 	llu = 55165;
+ 	unsigned long long int 	llu = 5516582965;
  	unsigned int			u = 3;
  	long long int llu_n = -55165;
  	int	u_n = -3;
@@ -36,7 +36,7 @@ int	main(void)
 	voi = "voivoi";
 	class = 'f';
 	fnum = 267199.77656565655;
-	printf("printf:    '%#030x'\n", *age);
-	ft_printf("ft_printf: '%#030x'\n", *age);
+	printf("%%printf:    '%010.5f'\n           %d\n", f, 7);
+	ft_printf("%%ft_printf: '%010.5f'\n           %d\n", f, 7);
 	return (0);
 }
