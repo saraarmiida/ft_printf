@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 12:13:36 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 19:14:14 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/24 20:31:34 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(void)
  	unsigned int			u = 3;
  	long long int llu_n = -55165;
  	int	u_n = -3;
-	long double lf = 0.38492384982395892735274;
+	long double lf = -432232342.0193840923840982309580927350274;
 	long double lf_n = -432232342.0193840923840982309580927350274;
 	double f = 432232342.01938409238;
 	double f_n = -432232342.01938409238;
@@ -36,7 +36,7 @@ int	main(void)
 	voi = "voivoi";
 	class = 'f';
 	fnum = 267199.77656565655;
-	printf("%%printf:    '%010.5f'\n           %d\n", f, 7);
-	ft_printf("%%ft_printf: '%010.5f'\n           %d\n", f, 7);
+	printf("%%printf:    '%u'\n", u);
+	ft_printf("%%ft_printf: '%u'\n", u);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:30:19 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 18:18:40 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/24 20:28:35 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	c_unsigned(t_menu *menu, va_list ap, char **str)
 		menu->width = (int)va_arg(ap, int);
 	if (menu->precision == -2)
 		menu->precision = (int)va_arg(ap, int);
-	get_length_hex(&integer, ap, menu);
+	get_length(&integer, ap, menu);
 	if (integer < 0)
 		integer = 4294967295 + integer;
 	s = ft_uitoa(integer);

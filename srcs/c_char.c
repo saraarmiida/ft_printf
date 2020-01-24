@@ -6,20 +6,11 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 12:55:07 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/23 16:53:08 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/24 20:21:13 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-
-void	ft_putchar_len(char c, int num)
-{
-	while (num > 0)
-	{
-		write(1, &c, 1);
-		num--;
-	}
-}
 
 void	c_char(t_menu *menu, va_list ap, char **str)
 {

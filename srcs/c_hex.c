@@ -6,24 +6,24 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:55:50 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 19:06:57 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/24 20:27:39 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-void	get_length_hex(unsigned long long *integer, va_list ap, t_menu *menu)
+void	get_length(unsigned long long *num, va_list ap, t_menu *menu)
 {
 	if (menu->length == 0)
-		*integer = (unsigned int)va_arg(ap, unsigned int);
+		*num = (unsigned int)va_arg(ap, unsigned int);
 	else if (menu->length == 1)
-		*integer = (unsigned char)va_arg(ap, unsigned int);
+		*num = (unsigned char)va_arg(ap, unsigned int);
 	else if (menu->length == 2)
-		*integer = (unsigned short)va_arg(ap, unsigned int);
+		*num = (unsigned short)va_arg(ap, unsigned int);
 	else if (menu->length == 3)
-		*integer = (unsigned long long)va_arg(ap, unsigned long long);
+		*num = (unsigned long long)va_arg(ap, unsigned long long);
 	else if (menu->length == 4)
-		*integer = (unsigned long)va_arg(ap, unsigned long);
+		*num = (unsigned long)va_arg(ap, unsigned long);
 }
 
 void	get_width(t_menu *menu, char **s)
@@ -88,7 +88,7 @@ void	c_hex(t_menu *menu, va_list ap, char **str, char x)
 		menu->width = (int)va_arg(ap, int);
 	if (menu->precision == -2)
 		menu->precision = (int)va_arg(ap, int);
-	get_length_hex(&integer, ap, menu);
+	get_length(&integer, ap, menu);
 	if (integer < 0)
 		integer = 4294967296 + integer;
 	s = ft_itoa_base(integer, 16);

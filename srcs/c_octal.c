@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:00:23 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 17:46:36 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/24 20:28:20 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	c_octal(t_menu *menu, va_list ap, char **str)
 		menu->width = (int)va_arg(ap, int);
 	if (menu->precision == -2)
 		menu->precision = (int)va_arg(ap, int);
-	get_length_hex(&integer, ap, menu);
+	get_length(&integer, ap, menu);
 	if (integer < 0)
 		integer = 4294967296 + integer;
 	s = ft_itoa_base(integer, 8);

@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 18:22:23 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 18:23:18 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/24 20:32:34 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@ long long	ft_pow(int num, int power)
 {
 	long long	res;
 	int			i;
-	
+
 	i = 1;
 	res = num;
 	while (i++ < power)

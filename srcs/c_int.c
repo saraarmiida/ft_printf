@@ -6,13 +6,13 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:37:31 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 17:02:24 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/24 20:28:09 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-void	get_length(long long int *integer, va_list ap, t_menu *menu)
+void	get_int_length(long long int *integer, va_list ap, t_menu *menu)
 {
 	if (menu->length == 0)
 		*integer = (int)va_arg(ap, int);
@@ -96,7 +96,7 @@ void	c_integer(t_menu *menu, va_list ap, char **str)
 		menu->width = (int)va_arg(ap, int);
 	if (menu->precision == -2)
 		menu->precision = (int)va_arg(ap, int);
-	get_length(&integer, ap, menu);
+	get_int_length(&integer, ap, menu);
 	s = ft_itoa(integer);
 	if (menu->precision != -1 && menu->precision > ft_strlen(s))
 		int_precision(menu, &s, integer);
