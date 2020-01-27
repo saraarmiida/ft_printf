@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 12:55:07 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 20:21:13 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/27 18:03:47 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,39 @@
 void	c_char(t_menu *menu, va_list ap, char **str)
 {
 	unsigned char	c;
+	char			*s;
 	char			a;
 	int				n;
 	char			*temp;
+	char			*temp2;
 
 	n = 0;
-	c = (unsigned char)va_arg(ap, int);
+	temp2 = NULL;
 	if (menu->width == -2)
 		menu->width = (int)va_arg(ap, int);
+	c = (unsigned char)va_arg(ap, int);
+	if (c == 0)
+	{
+		s = ft_strnew(2);
+		s[0] = '\\';
+		s[1] = 0;
+	}
+	else
+		s = ft_memset(ft_strnew(1), c, 1);
 	if (menu->width)
 	{
 		a = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
-		n = menu->width - 1;
+		n = (c == 0 ? menu->width - 2 : menu->width - 1);
 		temp = ft_memset(ft_strnew(n + 1), a, n + 1);
 		if (menu->minus == 0)
-			temp[n] = c;
+			temp2 = ft_strjoin(temp, s);
 		else if (menu->minus == 1)
-			temp[0] = c;
-		*str = ft_strdup(temp);
+			temp2 = ft_strjoin(s, temp);
+		*str = ft_strdup(temp2);
 		free(temp);
+		free(temp2);
+		free(s);
 	}
-	else
-		*str = ft_memset(ft_strnew(1), c, 1);
 }
 
 void	c_string(t_menu *menu, va_list ap, char **str)
@@ -52,9 +63,11 @@ void	c_string(t_menu *menu, va_list ap, char **str)
 	if (menu->precision == -2)
 		menu->precision = (int)va_arg(ap, int);
 	s = (char *)va_arg(ap, char *);
-	if (menu->precision > ft_strlen(s))
+	if (s == NULL)
+		s = ft_strdup("(null)");
+	if (menu->precision < (int)ft_strlen(s))
 		s = ft_strndup(s, (size_t)menu->precision);
-	if (menu->width > ft_strlen(s))
+	if (menu->width > (int)ft_strlen(s))
 	{
 		c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
 		n = menu->width - ft_strlen(s);
@@ -66,4 +79,26 @@ void	c_string(t_menu *menu, va_list ap, char **str)
 		free(temp);
 	}
 	*str = ft_strdup(s);
+}
+
+void	percent_sign(t_menu *menu, char **str)
+{
+	char	a;
+	int		n;
+	char	*temp;
+
+	if (menu->width)
+	{
+		a = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
+		n = menu->width - 1;
+		temp = ft_memset(ft_strnew(n + 1), a, n + 1);
+		if (menu->minus == 0)
+			temp[n] = '%';
+		else if (menu->minus == 1)
+			temp[0] = '%';
+		*str = ft_strdup(temp);
+		free(temp);
+	}
+	else
+		*str = ft_memset(ft_strnew(1), '%', 1);
 }

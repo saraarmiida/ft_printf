@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 13:01:25 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 20:17:44 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/27 11:26:03 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	double_precision(t_menu *menu, char **s, long double num)
 	char	*temp;
 	char	*temp2;
 
-	if (menu->precision != -1 && menu->precision > ft_strlen(*s))
+	if (menu->precision != -1 && menu->precision > (int)ft_strlen(*s))
 	{
 		if (num < 0)
 		{
@@ -81,25 +81,24 @@ void	double_width(t_menu *menu, char **s, long double num)
 
 void	c_double(t_menu *menu, va_list ap, char **str)
 {
-	int			n;
 	char		*s;
 	long double	num;
-	char		c;
-	char		*temp;
 
 	if (menu->width == -2)
 		menu->width = (int)va_arg(ap, int);
 	if (menu->precision == -2)
 		menu->precision = (int)va_arg(ap, int);
-	if (menu->length)
+	if (menu->length == 5)
 		num = (long double)va_arg(ap, long double);
 	else
 		num = (long double)va_arg(ap, double);
+	if (menu->length == 4)
+		num = 0.0;
 	menu->precision = (menu->precision == -1 ? 6 : menu->precision);
 	s = ft_ftoa(num, menu->precision);
 	double_precision(menu, &s, num);
 	double_plus(menu, &s, num);
-	if (menu->width > ft_strlen(s))
+	if (menu->width > (int)ft_strlen(s))
 		double_width(menu, &s, num);
 	*str = ft_strdup(s);
 	free(s);

@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:37:31 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 20:28:09 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/27 11:23:07 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,19 @@ void	int_precision(t_menu *menu, char **s, long long integer)
 		n = menu->precision - ft_strlen(*s) + 2;
 		temp = ft_memset(ft_strnew(n), '0', n);
 		temp[0] = '-';
-		*s = ft_strjoin(temp, *s + 1);
+		temp2 = ft_strjoin(temp, *s + 1);
 		free(temp);
+		free(*s);
+		*s = temp2;
 	}
 	else
 	{
 		n = menu->precision - ft_strlen(*s);
 		temp = ft_memset(ft_strnew(n), '0', n);
-		*s = ft_strjoin(temp, *s);
+		temp2 = ft_strjoin(temp, *s);
+		free(*s);
 		free(temp);
+		*s = temp2;
 	}
 }
 
@@ -73,7 +77,7 @@ void	int_width(t_menu *menu, char **s, long long integer)
 	if (menu->minus == 0 && menu->zero != 0 && menu->precision == -1)
 		c = '0';
 	n = menu->width - ft_strlen(*s);
-	if (menu->precision != -1 && menu->precision > ft_strlen(*s))
+	if (menu->precision != -1 && menu->precision > (int)ft_strlen(*s))
 		n = menu->width - menu->precision;
 	temp = ft_memset(ft_strnew(n), c, n);
 	*s = (menu->minus == 0 ? ft_strjoin(temp, *s) : ft_strjoin(*s, temp));
@@ -98,10 +102,10 @@ void	c_integer(t_menu *menu, va_list ap, char **str)
 		menu->precision = (int)va_arg(ap, int);
 	get_int_length(&integer, ap, menu);
 	s = ft_itoa(integer);
-	if (menu->precision != -1 && menu->precision > ft_strlen(s))
+	if (menu->precision != -1 && menu->precision > (int)ft_strlen(s))
 		int_precision(menu, &s, integer);
 	int_plus(menu, &s, integer);
-	if (menu->width && menu->width > ft_strlen(s))
+	if (menu->width && menu->width > (int)ft_strlen(s))
 		int_width(menu, &s, integer);
 	*str = ft_strdup(s);
 	free(s);

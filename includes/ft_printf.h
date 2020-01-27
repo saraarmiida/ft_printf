@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 18:11:40 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 20:30:58 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/27 17:29:55 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ typedef struct		s_link
 
 typedef struct		s_menu
 {
-	const char		*format;
 	const char		*symbols;
 	const char		*conversions;
 	int				i;
-	int				printed;
 	t_link			*head;
 	t_link			*link;
 	int				minus;
@@ -55,9 +53,10 @@ void				c_integer(t_menu *menu, va_list ap, char **str);
 void				c_octal(t_menu *menu, va_list ap, char **str);
 void				c_pointer(t_menu *menu, va_list ap, char **str);
 void				c_unsigned(t_menu *menu, va_list ap, char **str);
+void				percent_sign(t_menu *menu, char **str);
 
 void				zero_menu(t_menu *menu);
-char				*joinlist(t_link *list, int *printed);
+char				*joinlist(t_link *list);
 int					ft_baselen(unsigned long long n, int base);
 char				*ft_itoa_base(unsigned long long n, int base);
 void				get_width(t_menu *menu, char **s);

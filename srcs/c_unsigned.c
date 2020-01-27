@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:30:19 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 20:28:35 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/27 11:20:47 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	c_unsigned(t_menu *menu, va_list ap, char **str)
 	int					n;
 	char				*s;
 	unsigned long long	integer;
-	char				c;
 	char				*temp;
 
 	if (menu->width == -2)
@@ -70,7 +69,7 @@ void	c_unsigned(t_menu *menu, va_list ap, char **str)
 	if (integer < 0)
 		integer = 4294967295 + integer;
 	s = ft_uitoa(integer);
-	if (menu->precision != -1 && menu->precision > ft_strlen(s))
+	if (menu->precision != -1 && menu->precision > (int)ft_strlen(s))
 	{
 		n = menu->precision - ft_strlen(s);
 		temp = ft_memset(ft_strnew(n), '0', n);

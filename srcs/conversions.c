@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 13:45:01 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/21 12:18:50 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/27 17:30:51 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	conversions(char c, t_menu *menu, va_list ap)
 		c_hex(menu, ap, &menu->link->str, c);
 	else if (c == 'f')
 		c_double(menu, ap, &menu->link->str);
+	else if (c == '%')
+		percent_sign(menu, &menu->link->str);
 	menu->i++;
 	zero_menu(menu);
 }

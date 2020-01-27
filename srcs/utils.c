@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:13:41 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 20:18:15 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/27 16:58:04 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,29 +86,48 @@ void	zero_menu(t_menu *menu)
 	menu->length = 0;
 }
 
-char	*joinlist(t_link *list, int *printed)
+char	*ft_putsubstr(char *str, int i, char *sub)
+{
+	int	j;
+
+	j = 0;
+	while (sub[j] != '\0')
+	{
+		str[i + j] = sub[j];
+		j++;
+	}
+	return (str);
+}
+
+char	*joinlist(t_link *head)
 {
 	char	*str;
-	char	*temp;
-	t_link	*templ;
+	t_link	*link;
+	t_link	*temp;
+	int 	i;
+	int		len;
 
-	str = NULL;
-	while (list != NULL)
+	len = 0;
+	i = 0;
+	link = head;
+	while (link != NULL)
 	{
-		if (str == NULL)
-			str = list->str;
-		else
-		{
-			temp = ft_strjoin(str, list->str);
-			free(str);
-			str = temp;
-		}
-		if (list->next == NULL)
-			break ;
-		templ = list->next;
-		free(list);
-		list = templ;
+		len += ft_strlen(link->str);
+		link = link->next;
 	}
-	*printed = ft_strlen(str);
+	if (!(str = (char *)malloc(sizeof(char) * len + 1)))
+		return (NULL);
+	str[len] = '\0';
+	link = head;
+	while (i < len)
+	{
+		str = ft_putsubstr(str, i, link->str);
+		i += ft_strlen(link->str);
+		temp = link->next;
+		free(link->str);
+		free(link);
+		link = temp;
+	}
+
 	return (str);
 }

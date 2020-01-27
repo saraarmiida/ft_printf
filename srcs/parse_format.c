@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:14:52 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 18:55:35 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/27 17:39:35 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,6 @@ int	create_link(t_menu *menu, const char *form, char delim)
 	return (0);
 }
 
-int	percent_sign(t_menu *menu)
-{
-	{
-		if (!(menu->link->next = (t_link *)malloc(sizeof(t_link))))
-			return (1);
-		menu->link = menu->link->next;
-		menu->link->next = NULL;
-		if (!(menu->link->str = ft_strnew(1)))
-			return (1);
-		menu->link->str[0] = '%';
-		menu->i += 2;
-	}
-	return (0);
-}
-
 int	parse_format(const char *format, t_menu *menu, va_list ap)
 {
 	if (ft_strchr(format, '%') == NULL)
@@ -58,7 +43,7 @@ int	parse_format(const char *format, t_menu *menu, va_list ap)
 	{
 		if (create_link(menu, format, '%'))
 			return (1);
-		if (format[menu->i] == '%' && format[menu->i + 1] != '%')
+		else if (format[menu->i] == '%')
 		{
 			menu->i++;
 			if (!(ft_strchr(menu->symbols, format[menu->i])))
@@ -68,9 +53,7 @@ int	parse_format(const char *format, t_menu *menu, va_list ap)
 			if (ft_strchr(menu->conversions, format[menu->i]))
 				conversions(format[menu->i], menu, ap);
 		}
-		else if (format[menu->i] == '%' && format[menu->i + 1] == '%')
-			if (percent_sign(menu))
-				return (1);
 	}
+	menu->link = menu->head;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:55:50 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 20:27:39 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/27 13:32:34 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,14 @@ void	get_width(t_menu *menu, char **s)
 	char	*temp;
 	char	*temp2;
 
-	if (menu->width && menu->width > ft_strlen(*s))
+	temp2 = NULL;
+	if (menu->width && menu->width > (int)ft_strlen(*s))
 	{
 		c = ' ';
 		if (menu->minus == 0 && menu->zero != 0 && menu->precision == -1)
 			c = '0';
 		n = menu->width - ft_strlen(*s);
-		if (menu->precision != -1 && menu->precision > ft_strlen(*s))
+		if (menu->precision != -1 && menu->precision > (int)ft_strlen(*s))
 			n = menu->width - menu->precision;
 		temp = ft_memset(ft_strnew(n), c, n);
 		if (menu->minus == 0)
@@ -52,25 +53,27 @@ void	get_width(t_menu *menu, char **s)
 	}
 }
 
-char	*hex_modifiers(t_menu *menu, char *s)
+char	*hex_modifiers(t_menu *menu, char *s, unsigned long long num)
 {
 	char	*temp;
 	int		n;
 
-	if (menu->precision != -1 && menu->precision > ft_strlen(s))
+	if (menu->precision != -1 && menu->precision > (int)ft_strlen(s))
 	{
 		n = menu->precision - ft_strlen(s);
 		temp = ft_memset(ft_strnew(n), '0', n);
 		s = ft_strjoin(temp, s);
 		free(temp);
 	}
+	if (num == 0 && menu->precision == 0)
+		s = ft_memset(ft_strnew(0), '0', 0);
 	if (menu->hash == 1 && !(menu->width != 0 && menu->zero\
-	!= 0 && menu->precision == -1 && menu->minus == 0))
+	!= 0 && menu->precision == -1 && menu->minus == 0) && num != 0)
 	{
 		temp = ft_strdup("0x");
 		s = ft_strjoin(temp, s);
 	}
-	if (menu->width && menu->width > ft_strlen(s))
+	if (menu->width && menu->width > (int)ft_strlen(s))
 		get_width(menu, &s);
 	if (menu->hash == 1 && (menu->width != 0 && menu->zero\
 	!= 0 && menu->precision == -1))
@@ -92,7 +95,7 @@ void	c_hex(t_menu *menu, va_list ap, char **str, char x)
 	if (integer < 0)
 		integer = 4294967296 + integer;
 	s = ft_itoa_base(integer, 16);
-	s = hex_modifiers(menu, s);
+	s = hex_modifiers(menu, s, integer);
 	if (x == 'X')
 	{
 		n = 0;

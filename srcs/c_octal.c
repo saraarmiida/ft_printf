@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:00:23 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 20:28:20 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/27 11:21:37 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	oct_modifiers(t_menu *menu, char **s)
 	char	*temp2;
 	int		n;
 
-	if (menu->precision != -1 && menu->precision > ft_strlen(*s))
+	if (menu->precision != -1 && menu->precision > (int)ft_strlen(*s))
 	{
 		n = menu->precision - ft_strlen(*s);
 		temp = ft_memset(ft_strnew(n), '0', n);
@@ -61,11 +61,8 @@ void	oct_modifiers(t_menu *menu, char **s)
 
 void	c_octal(t_menu *menu, va_list ap, char **str)
 {
-	int					n;
 	char				*s;
 	unsigned long long	integer;
-	char				c;
-	char				*temp;
 
 	if (menu->width == -2)
 		menu->width = (int)va_arg(ap, int);

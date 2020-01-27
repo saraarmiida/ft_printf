@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 13:56:17 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/24 18:07:00 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/27 17:10:57 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ void	pointer_modifiers(t_menu *menu, char **s)
 	char	*str;
 	char	*str2;
 
-	if (menu->precision != -1 && menu->precision > ft_strlen(*s))
+	if (menu->precision != -1 && menu->precision > (int)ft_strlen(*s))
 	{
 		str = ft_strndup(*s, (size_t)menu->precision + 2);
 		free(*s);
 		*s = str;
 	}
-	if (menu->width && ft_strlen(*s) < menu->width)
+	if (menu->width && menu->width > (int)ft_strlen(*s))
 	{
 		c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
 		n = menu->width - ft_strlen(*s);
@@ -78,7 +78,7 @@ void	pointer_modifiers(t_menu *menu, char **s)
 		free(str);
 		free(*s);
 		str2[1] = (menu->minus == 0 && menu->zero != 0 ? 'x' : str2[1]);
-		str2[n + 1] = (menu->minus == 0 && menu->zero != 0 ? 'x' : str2[n + 1]);
+		str2[n + 1] = (menu->minus == 0 && menu->zero != 0 ? '0' : str2[n + 1]);
 		*s = str2;
 	}
 }
@@ -87,7 +87,6 @@ void	c_pointer(t_menu *menu, va_list ap, char **str)
 {
 	char				*s;
 	unsigned long long	pointer;
-	char				*temp;
 
 	if (menu->width == -2)
 		menu->width = (int)va_arg(ap, int);
