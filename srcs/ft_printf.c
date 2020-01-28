@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 14:34:25 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/27 17:23:29 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/28 16:26:26 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,13 @@ int		ft_printf(const char *format, ...)
 	if ((mode = parse_format(format, menu, ap)) == 1)
 		return (-1);
 	else if (mode == 2)
-		str = (char *)format;
+		str = ft_strdup(format);
 	else
 		str = joinlist(menu->head);
 	ft_putstr(str);
 	va_end(ap);
 	printed = ft_strlen(str);
 	free(menu);
-	if (mode != 2)
-		free(str);
+	free(str);
 	return (printed);
 }

@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 13:01:25 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/27 11:26:03 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/28 16:50:18 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,15 @@ void	double_precision(t_menu *menu, char **s, long double num)
 void	double_plus(t_menu *menu, char **s, long double num)
 {
 	char	*temp;
+	char	*temp2;
 
 	if ((menu->plus || menu->space) && num >= 0)
 	{
 		temp = ft_memset(ft_strnew(1), (menu->plus == 1 ? '+' : ' '), 1);
-		*s = ft_strjoin(temp, *s);
+		temp2 = ft_strjoin(temp, *s);
 		free(temp);
+		free(*s);
+		*s = temp2;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 12:55:07 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/28 11:50:26 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/28 15:57:33 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ void	c_string(t_menu *menu, va_list ap, char **str)
 {
 	char	*s;
 	char	*temp;
+	char	*temp2;
 	char	c;
 	int		n;
 
 	n = 0;
+	temp2 = NULL;
 	if (menu->width == -2)
 		menu->width = (int)va_arg(ap, int);
 	if (menu->precision == -2)
@@ -59,18 +61,24 @@ void	c_string(t_menu *menu, va_list ap, char **str)
 	s = (char *)va_arg(ap, char *);
 	if (s == NULL)
 		s = ft_strdup("(null)");
-	if (menu->precision < (int)ft_strlen(s))
-		s = ft_strndup(s, (size_t)menu->precision);
+	if (menu->precision != -1 && menu->precision < (int)ft_strlen(s))
+	{
+		temp = ft_strndup(s, (size_t)menu->precision);
+		free(s);
+		s = temp;
+	}
 	if (menu->width > (int)ft_strlen(s))
 	{
 		c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
 		n = menu->width - ft_strlen(s);
 		temp = ft_memset(ft_strnew(n), c, n);
 		if (menu->minus == 0)
-			s = ft_strjoin(temp, s);
+			temp2 = ft_strjoin(temp, s);
 		else if (menu->minus == 1)
-			s = ft_strjoin(s, temp);
+			temp2 = ft_strjoin(s, temp);
+		free(s);
 		free(temp);
+		s = temp2;
 	}
 	*str = ft_strdup(s);
 	free(s);

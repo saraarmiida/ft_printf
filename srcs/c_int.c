@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:37:31 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/28 11:35:42 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/28 15:52:41 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	int_plus(t_menu *menu, char **s, long long integer)
 void	int_width(t_menu *menu, char **s, long long integer)
 {
 	char	*temp;
+	char	*temp2;
 	char	c;
 	int		n;
 
@@ -88,8 +89,10 @@ void	int_width(t_menu *menu, char **s, long long integer)
 	if (menu->precision != -1 && menu->precision > (int)ft_strlen(*s))
 		n = menu->width - menu->precision;
 	temp = ft_memset(ft_strnew(n), c, n);
-	*s = (menu->minus == 0 ? ft_strjoin(temp, *s) : ft_strjoin(*s, temp));
+	temp2 = (menu->minus == 0 ? ft_strjoin(temp, *s) : ft_strjoin(*s, temp));
 	free(temp);
+	free(*s);
+	*s = temp2;
 	if (c == '0' && (integer < 0 || (menu->plus == 1 && integer >= 0)))
 	{
 		temp = *s;
