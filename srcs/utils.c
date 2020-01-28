@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:13:41 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/27 16:58:04 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/28 11:50:04 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ char	*ft_putsubstr(char *str, int i, char *sub)
 		str[i + j] = sub[j];
 		j++;
 	}
+	free(sub);
 	return (str);
 }
 
@@ -124,10 +125,8 @@ char	*joinlist(t_link *head)
 		str = ft_putsubstr(str, i, link->str);
 		i += ft_strlen(link->str);
 		temp = link->next;
-		free(link->str);
 		free(link);
 		link = temp;
 	}
-
 	return (str);
 }

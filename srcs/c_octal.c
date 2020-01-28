@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:00:23 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/27 11:21:37 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/28 11:03:26 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_itoa_base(unsigned long long n, int base)
 	return (str);
 }
 
-void	oct_modifiers(t_menu *menu, char **s)
+void	oct_modifiers(t_menu *menu, char **s, int num)
 {
 	char	*temp;
 	char	*temp2;
@@ -57,6 +57,11 @@ void	oct_modifiers(t_menu *menu, char **s)
 		free(temp);
 		*s = temp2;
 	}
+	if (menu->hash != 1 && menu->precision == 0 && num == 0)
+	{
+		free(*s);
+		*s = ft_strnew(0);
+	}
 }
 
 void	c_octal(t_menu *menu, va_list ap, char **str)
@@ -72,7 +77,7 @@ void	c_octal(t_menu *menu, va_list ap, char **str)
 	if (integer < 0)
 		integer = 4294967296 + integer;
 	s = ft_itoa_base(integer, 8);
-	oct_modifiers(menu, &s);
+	oct_modifiers(menu, &s, integer);
 	get_width(menu, &s);
 	*str = ft_strdup(s);
 	free(s);

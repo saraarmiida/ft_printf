@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:55:50 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/27 13:32:34 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/28 11:55:21 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,17 @@ void	get_width(t_menu *menu, char **s)
 char	*hex_modifiers(t_menu *menu, char *s, unsigned long long num)
 {
 	char	*temp;
+	char	*temp2;
 	int		n;
 
 	if (menu->precision != -1 && menu->precision > (int)ft_strlen(s))
 	{
 		n = menu->precision - ft_strlen(s);
 		temp = ft_memset(ft_strnew(n), '0', n);
-		s = ft_strjoin(temp, s);
+		temp2 = ft_strjoin(temp, s);
 		free(temp);
+		free(s);
+		s = temp2;
 	}
 	if (num == 0 && menu->precision == 0)
 		s = ft_memset(ft_strnew(0), '0', 0);
@@ -71,7 +74,10 @@ char	*hex_modifiers(t_menu *menu, char *s, unsigned long long num)
 	!= 0 && menu->precision == -1 && menu->minus == 0) && num != 0)
 	{
 		temp = ft_strdup("0x");
-		s = ft_strjoin(temp, s);
+		temp2 = ft_strjoin(temp, s);
+		free(temp);
+		free(s);
+		s = temp2;
 	}
 	if (menu->width && menu->width > (int)ft_strlen(s))
 		get_width(menu, &s);

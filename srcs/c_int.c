@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:37:31 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/27 11:23:07 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/28 11:35:42 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,38 @@ void	get_int_length(long long int *integer, va_list ap, t_menu *menu)
 		*integer = (long)va_arg(ap, long);
 }
 
-void	int_precision(t_menu *menu, char **s, long long integer)
+void	int_precision(t_menu *menu, char **s, long long num)
 {
 	char	*temp;
 	char	*temp2;
 	int		n;
 
-	if (integer < 0)
+	if (menu->precision != -1 && menu->precision > ((int)ft_strlen(*s) - (num < 0 ? 1 : 0)))
 	{
-		n = menu->precision - ft_strlen(*s) + 2;
-		temp = ft_memset(ft_strnew(n), '0', n);
-		temp[0] = '-';
-		temp2 = ft_strjoin(temp, *s + 1);
-		free(temp);
-		free(*s);
-		*s = temp2;
+		if (num < 0)
+		{
+			n = menu->precision - ft_strlen(*s) + 2;
+			temp = ft_memset(ft_strnew(n), '0', n);
+			temp[0] = '-';
+			temp2 = ft_strjoin(temp, *s + 1);
+			free(temp);
+			free(*s);
+			*s = temp2;
+		}
+		else
+		{
+			n = menu->precision - ft_strlen(*s);
+			temp = ft_memset(ft_strnew(n), '0', n);
+			temp2 = ft_strjoin(temp, *s);
+			free(*s);
+			free(temp);
+			*s = temp2;
+		}
 	}
-	else
+	if (menu->precision == 0 && num == 0)
 	{
-		n = menu->precision - ft_strlen(*s);
-		temp = ft_memset(ft_strnew(n), '0', n);
-		temp2 = ft_strjoin(temp, *s);
 		free(*s);
-		free(temp);
-		*s = temp2;
+		*s = ft_strnew(0);
 	}
 }
 
@@ -58,7 +66,7 @@ void	int_plus(t_menu *menu, char **s, long long integer)
 	char	*temp;
 	char	*temp2;
 
-	if ((menu->plus || menu->space) && integer > 0)
+	if ((menu->plus || menu->space) && integer >= 0)
 	{
 		temp2 = (menu->plus == 1 ? "+" : " ");
 		temp = ft_strjoin(temp2, *s);
@@ -102,8 +110,7 @@ void	c_integer(t_menu *menu, va_list ap, char **str)
 		menu->precision = (int)va_arg(ap, int);
 	get_int_length(&integer, ap, menu);
 	s = ft_itoa(integer);
-	if (menu->precision != -1 && menu->precision > (int)ft_strlen(s))
-		int_precision(menu, &s, integer);
+	int_precision(menu, &s, integer);
 	int_plus(menu, &s, integer);
 	if (menu->width && menu->width > (int)ft_strlen(s))
 		int_width(menu, &s, integer);
