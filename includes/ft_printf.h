@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 18:11:40 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/27 17:29:55 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/29 12:48:52 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct		s_menu
 	int				width;
 	int				precision;
 	int				length;
+	int				null_c;
 }					t_menu;
 
 int					ft_printf(const char *format, ...);

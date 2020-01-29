@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 13:56:17 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/27 17:10:57 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/29 14:56:43 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_itoa_base_hex(unsigned long n, int base)
 	str[0] = '0';
 	str[1] = 'x';
 	if (n == 0)
-		str[0] = 48;
+		str[2] = 48;
 	while (n > 0)
 	{
 		str[i] = (n % base < 10) ? '0' + n % base : n % base + 'a' - 10;

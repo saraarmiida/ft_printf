@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:14:52 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/27 17:39:35 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/29 14:40:49 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,24 @@ int	parse_format(const char *format, t_menu *menu, va_list ap)
 		{
 			menu->i++;
 			if (!(ft_strchr(menu->symbols, format[menu->i])))
-				break ;
+			{
+				free(menu->head->str);
+				free(menu->head);
+				free(menu);
+				return (1);
+			}
 			if (!(ft_strchr(menu->conversions, format[menu->i])))
 				modifiers(format, menu);
 			if (ft_strchr(menu->conversions, format[menu->i]))
 				conversions(format[menu->i], menu, ap);
+			else
+			{
+				free(menu->head->str);
+				free(menu->head);
+				free(menu);
+				return (1);
+			}
+			
 		}
 	}
 	menu->link = menu->head;

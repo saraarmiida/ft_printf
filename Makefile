@@ -6,7 +6,7 @@
 #    By: spentti <spentti@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/10 14:03:19 by spentti           #+#    #+#              #
-#    Updated: 2020/01/27 11:42:29 by spentti          ###   ########.fr        #
+#    Updated: 2020/01/29 15:06:28 by spentti          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC = srcs/c_char.c \
 		srcs/modifiers.c \
 		srcs/parse_format.c \
 		srcs/utils.c \
+		srcs/ft_ftoa.c
 
 OBJ = c_char.o \
 		c_double.o \
@@ -40,6 +41,7 @@ OBJ = c_char.o \
 		modifiers.o \
 		parse_format.o \
 		utils.o \
+		ft_ftoa.o
 
 all: $(NAME)
 

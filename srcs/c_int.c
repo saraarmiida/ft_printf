@@ -6,13 +6,13 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:37:31 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/28 15:52:41 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/29 14:29:11 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-void	get_int_length(long long int *integer, va_list ap, t_menu *menu)
+void	get_int_length(long long *integer, va_list ap, t_menu *menu)
 {
 	if (menu->length == 0)
 		*integer = (int)va_arg(ap, int);
@@ -21,7 +21,7 @@ void	get_int_length(long long int *integer, va_list ap, t_menu *menu)
 	else if (menu->length == 2)
 		*integer = (short)va_arg(ap, int);
 	else if (menu->length == 3)
-		*integer = (long long)va_arg(ap, long long);
+		*integer = (unsigned long long)va_arg(ap, unsigned long long);
 	else if (menu->length == 4)
 		*integer = (long)va_arg(ap, long);
 }
@@ -105,14 +105,21 @@ void	int_width(t_menu *menu, char **s, long long integer)
 void	c_integer(t_menu *menu, va_list ap, char **str)
 {
 	char				*s;
-	long long int		integer;
+	long long		integer;
 
 	if (menu->width == -2)
 		menu->width = (int)va_arg(ap, int);
 	if (menu->precision == -2)
 		menu->precision = (int)va_arg(ap, int);
 	get_int_length(&integer, ap, menu);
-	s = ft_itoa(integer);
+	if (integer < -9223372036854775807)
+		s = ft_strdup("-9223372036854775808");
+	else
+	{
+		if (menu->length == 3)
+			integer = (long long)integer;
+		s = ft_itoa(integer);
+	}
 	int_precision(menu, &s, integer);
 	int_plus(menu, &s, integer);
 	if (menu->width && menu->width > (int)ft_strlen(s))

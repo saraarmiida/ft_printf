@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 14:34:25 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/28 16:26:26 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/29 14:39:26 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_menu	*create_menu(void)
 	menu->conversions = "cspdiouxXfy%";
 	menu->i = 0;
 	menu->head = NULL;
+	menu->null_c = 0;
 	zero_menu(menu);
 	return (menu);
 }
@@ -34,19 +35,23 @@ int		ft_printf(const char *format, ...)
 	int				mode;
 	char			*str;
 
-	menu = create_menu();
 	va_start(ap, format);
 	if (ft_strlen(format) == 1 && format[0] == '%')
 		return (-1);
+	menu = create_menu();
 	if ((mode = parse_format(format, menu, ap)) == 1)
 		return (-1);
 	else if (mode == 2)
+	{
 		str = ft_strdup(format);
+	}
 	else
+	{
 		str = joinlist(menu->head);
+	}
 	ft_putstr(str);
 	va_end(ap);
-	printed = ft_strlen(str);
+	printed = ft_strlen(str) - menu->null_c;
 	free(menu);
 	free(str);
 	return (printed);

@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:30:19 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/27 11:20:47 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/29 14:47:01 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	c_unsigned(t_menu *menu, va_list ap, char **str)
 	char				*s;
 	unsigned long long	integer;
 	char				*temp;
+	char				*temp2;
 
 	if (menu->width == -2)
 		menu->width = (int)va_arg(ap, int);
@@ -73,8 +74,15 @@ void	c_unsigned(t_menu *menu, va_list ap, char **str)
 	{
 		n = menu->precision - ft_strlen(s);
 		temp = ft_memset(ft_strnew(n), '0', n);
-		s = ft_strjoin(temp, s);
+		temp2 = ft_strjoin(temp, s);
 		free(temp);
+		free(s);
+		s = temp2;
+	}
+	if (menu->precision == 0 && integer == 0)
+	{
+		free(s);
+		s = ft_strdup("");
 	}
 	get_width(menu, &s);
 	*str = ft_strdup(s);
