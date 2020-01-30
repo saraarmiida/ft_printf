@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:30:19 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/29 14:47:01 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:27:01 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,29 @@ char	*ft_uitoa(unsigned long long int n)
 	return (str);
 }
 
+char	*get_unswidth(t_menu *menu, unsigned long long integer, char *s)
+{
+	char	*temp;
+	int		n;
+
+	if (menu->precision != -1 && menu->precision > (int)ft_strlen(s))
+	{
+		n = menu->precision - ft_strlen(s);
+		temp = ft_memset(ft_strnew(n), '0', n);
+		s = join_free(temp, s);
+	}
+	if (menu->precision == 0 && integer == 0)
+	{
+		free(s);
+		s = ft_strdup("");
+	}
+	return (s);
+}
+
 void	c_unsigned(t_menu *menu, va_list ap, char **str)
 {
-	int					n;
 	char				*s;
 	unsigned long long	integer;
-	char				*temp;
-	char				*temp2;
 
 	if (menu->width == -2)
 		menu->width = (int)va_arg(ap, int);
@@ -70,20 +86,7 @@ void	c_unsigned(t_menu *menu, va_list ap, char **str)
 	if (integer < 0)
 		integer = 4294967295 + integer;
 	s = ft_uitoa(integer);
-	if (menu->precision != -1 && menu->precision > (int)ft_strlen(s))
-	{
-		n = menu->precision - ft_strlen(s);
-		temp = ft_memset(ft_strnew(n), '0', n);
-		temp2 = ft_strjoin(temp, s);
-		free(temp);
-		free(s);
-		s = temp2;
-	}
-	if (menu->precision == 0 && integer == 0)
-	{
-		free(s);
-		s = ft_strdup("");
-	}
+	s = get_unswidth(menu, integer, s);
 	get_width(menu, &s);
 	*str = ft_strdup(s);
 	free(s);

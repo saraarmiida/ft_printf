@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 18:11:40 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/29 12:48:52 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:44:14 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int					ft_baselen(unsigned long long n, int base);
 char				*ft_itoa_base(unsigned long long n, int base);
 void				get_width(t_menu *menu, char **s);
 void				get_length(unsigned long long *num, va_list ap, t_menu *m);
-char				*ft_ftoa(long double n, int precision);
+char				*ft_ftoa(long double n, int precision, int hash);
+char				*join_free(char *str1, char *str2);
+void				free_multiple(void *s1, void *s2, void *s3);
 
 #endif

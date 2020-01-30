@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:55:50 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/28 11:55:21 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:16:17 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ void	get_width(t_menu *menu, char **s)
 	char	c;
 	int		n;
 	char	*temp;
-	char	*temp2;
 
-	temp2 = NULL;
 	if (menu->width && menu->width > (int)ft_strlen(*s))
 	{
 		c = ' ';
@@ -44,29 +42,22 @@ void	get_width(t_menu *menu, char **s)
 			n = menu->width - menu->precision;
 		temp = ft_memset(ft_strnew(n), c, n);
 		if (menu->minus == 0)
-			temp2 = ft_strjoin(temp, *s);
+			*s = join_free(temp, *s);
 		else if (menu->minus == 1)
-			temp2 = ft_strjoin(*s, temp);
-		free(temp);
-		free(*s);
-		*s = temp2;
+			*s = join_free(*s, temp);
 	}
 }
 
 char	*hex_modifiers(t_menu *menu, char *s, unsigned long long num)
 {
 	char	*temp;
-	char	*temp2;
 	int		n;
 
 	if (menu->precision != -1 && menu->precision > (int)ft_strlen(s))
 	{
 		n = menu->precision - ft_strlen(s);
 		temp = ft_memset(ft_strnew(n), '0', n);
-		temp2 = ft_strjoin(temp, s);
-		free(temp);
-		free(s);
-		s = temp2;
+		s = join_free(temp, s);
 	}
 	if (num == 0 && menu->precision == 0)
 		s = ft_memset(ft_strnew(0), '0', 0);
@@ -74,10 +65,7 @@ char	*hex_modifiers(t_menu *menu, char *s, unsigned long long num)
 	!= 0 && menu->precision == -1 && menu->minus == 0) && num != 0)
 	{
 		temp = ft_strdup("0x");
-		temp2 = ft_strjoin(temp, s);
-		free(temp);
-		free(s);
-		s = temp2;
+		s = join_free(temp, s);
 	}
 	if (menu->width && menu->width > (int)ft_strlen(s))
 		get_width(menu, &s);

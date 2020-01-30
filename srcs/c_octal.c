@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 11:00:23 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/28 11:03:26 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:09:40 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,18 @@ char	*ft_itoa_base(unsigned long long n, int base)
 void	oct_modifiers(t_menu *menu, char **s, int num)
 {
 	char	*temp;
-	char	*temp2;
 	int		n;
 
 	if (menu->precision != -1 && menu->precision > (int)ft_strlen(*s))
 	{
 		n = menu->precision - ft_strlen(*s);
 		temp = ft_memset(ft_strnew(n), '0', n);
-		temp2 = ft_strjoin(temp, *s);
-		free(*s);
-		free(temp);
-		*s = temp2;
+		*s = join_free(temp, *s);
 	}
 	if (menu->hash == 1 && *s[0] != '0')
 	{
 		temp = ft_strdup("0");
-		temp2 = ft_strjoin(temp, *s);
-		free(*s);
-		free(temp);
-		*s = temp2;
+		*s = join_free(temp, *s);
 	}
 	if (menu->hash != 1 && menu->precision == 0 && num == 0)
 	{

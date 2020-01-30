@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 13:56:17 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/29 14:56:43 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:17:36 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,7 @@ void	pointer_modifiers(t_menu *menu, char **s)
 		c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
 		n = menu->width - ft_strlen(*s);
 		str = ft_memset(ft_strnew(n), c, n);
-		str2 = (menu->minus == 0 ? ft_strjoin(str, *s) : ft_strjoin(*s, str));
-		free(str);
-		free(*s);
+		str2 = (menu->minus == 0 ? join_free(str, *s) : join_free(*s, str));
 		str2[1] = (menu->minus == 0 && menu->zero != 0 ? 'x' : str2[1]);
 		str2[n + 1] = (menu->minus == 0 && menu->zero != 0 ? '0' : str2[n + 1]);
 		*s = str2;

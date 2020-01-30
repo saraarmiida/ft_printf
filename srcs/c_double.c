@@ -6,51 +6,20 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 13:01:25 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/28 16:50:18 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:26:19 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-void	double_precision(t_menu *menu, char **s, long double num)
-{
-	int		n;
-	char	*temp;
-	char	*temp2;
-
-	if (menu->precision != -1 && menu->precision > (int)ft_strlen(*s))
-	{
-		if (num < 0)
-		{
-			n = menu->precision - ft_strlen(*s) + 2;
-			temp = ft_memset(ft_strnew(n), '0', n);
-			temp[0] = '-';
-			temp2 = ft_strjoin(temp, *s + 1);
-		}
-		else
-		{
-			n = menu->precision - ft_strlen(*s);
-			temp = ft_memset(ft_strnew(n), '0', n);
-			temp2 = ft_strjoin(temp, *s);
-		}
-		free(temp);
-		free(*s);
-		*s = temp2;
-	}
-}
-
 void	double_plus(t_menu *menu, char **s, long double num)
 {
 	char	*temp;
-	char	*temp2;
 
 	if ((menu->plus || menu->space) && num >= 0)
 	{
 		temp = ft_memset(ft_strnew(1), (menu->plus == 1 ? '+' : ' '), 1);
-		temp2 = ft_strjoin(temp, *s);
-		free(temp);
-		free(*s);
-		*s = temp2;
+		*s = join_free(temp, *s);
 	}
 }
 
@@ -64,9 +33,7 @@ void	double_width(t_menu *menu, char **s, long double num)
 	c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
 	n = menu->width - ft_strlen(*s);
 	str = ft_memset(ft_strnew(n), c, n);
-	str2 = (menu->minus == 0 ? ft_strjoin(str, *s) : ft_strjoin(*s, str));
-	free(str);
-	free(*s);
+	str2 = (menu->minus == 0 ? join_free(str, *s) : join_free(*s, str));
 	if (menu->zero != 0 && menu->minus == 0)
 	{
 		if (((menu->plus == 1 || menu->space == 1) && num >= 0) || num < 0)
@@ -95,11 +62,8 @@ void	c_double(t_menu *menu, va_list ap, char **str)
 		num = (long double)va_arg(ap, long double);
 	else
 		num = (long double)va_arg(ap, double);
-	if (menu->length == 4)
-		num = 0.0;
 	menu->precision = (menu->precision == -1 ? 6 : menu->precision);
-	s = ft_ftoa(num, menu->precision);
-	double_precision(menu, &s, num);
+	s = ft_ftoa(num, menu->precision, menu->hash);
 	double_plus(menu, &s, num);
 	if (menu->width > (int)ft_strlen(s))
 		double_width(menu, &s, num);

@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:37:31 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/29 14:29:11 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:34:14 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,16 @@ void	get_int_length(long long *integer, va_list ap, t_menu *menu)
 		*integer = (long)va_arg(ap, long);
 }
 
-void	int_precision(t_menu *menu, char **s, long long num)
+void	int_precision(int precision, char **s, long long num, int n)
 {
 	char	*temp;
 	char	*temp2;
-	int		n;
 
-	if (menu->precision != -1 && menu->precision > ((int)ft_strlen(*s) - (num < 0 ? 1 : 0)))
+	if (precision != -1 && precision > ((int)ft_strlen(*s) - (num < 0 ? 1 : 0)))
 	{
 		if (num < 0)
 		{
-			n = menu->precision - ft_strlen(*s) + 2;
-			temp = ft_memset(ft_strnew(n), '0', n);
+			temp = ft_memset(ft_strnew(n + 2), '0', n + 2);
 			temp[0] = '-';
 			temp2 = ft_strjoin(temp, *s + 1);
 			free(temp);
@@ -46,15 +44,11 @@ void	int_precision(t_menu *menu, char **s, long long num)
 		}
 		else
 		{
-			n = menu->precision - ft_strlen(*s);
 			temp = ft_memset(ft_strnew(n), '0', n);
-			temp2 = ft_strjoin(temp, *s);
-			free(*s);
-			free(temp);
-			*s = temp2;
+			*s = join_free(temp, *s);
 		}
 	}
-	if (menu->precision == 0 && num == 0)
+	if (precision == 0 && num == 0)
 	{
 		free(*s);
 		*s = ft_strnew(0);
@@ -104,7 +98,7 @@ void	int_width(t_menu *menu, char **s, long long integer)
 
 void	c_integer(t_menu *menu, va_list ap, char **str)
 {
-	char				*s;
+	char			*s;
 	long long		integer;
 
 	if (menu->width == -2)
@@ -120,7 +114,7 @@ void	c_integer(t_menu *menu, va_list ap, char **str)
 			integer = (long long)integer;
 		s = ft_itoa(integer);
 	}
-	int_precision(menu, &s, integer);
+	int_precision(menu->precision, &s, integer, menu->precision - ft_strlen(s));
 	int_plus(menu, &s, integer);
 	if (menu->width && menu->width > (int)ft_strlen(s))
 		int_width(menu, &s, integer);

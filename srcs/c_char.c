@@ -6,41 +6,40 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 12:55:07 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/29 12:50:01 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/30 17:05:50 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
+char	*char_width(t_menu *menu, char *s, int len)
+{
+	char	a;
+	int		n;
+	char	*temp;
+
+	a = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
+	n = menu->width - len;
+	temp = ft_memset(ft_strnew(n), a, n);
+	if (menu->minus == 0)
+		s = join_free(temp, s);
+	else
+		s = join_free(s, temp);
+	return (s);
+}
+
 void	c_char(t_menu *menu, va_list ap, char **str)
 {
 	unsigned char	c;
 	char			*s;
-	char			a;
-	int				n;
-	char			*temp;
-	char			*temp2;
 
-	n = 0;
-	temp2 = NULL;
 	if (menu->width == -2)
 		menu->width = (int)va_arg(ap, int);
 	c = (unsigned char)va_arg(ap, int);
 	s = (c == '\0' ? ft_strdup("^@") : ft_memset(ft_strnew(1), c, 1));
-	menu->null_c = (c == '\0' ? 1 : 0);
+	menu->null_c = (c == 0 ? 1 : 0);
 	if (menu->width)
-	{
-		a = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
-		n =  menu->width - 1;
-		temp = ft_memset(ft_strnew(n), a, n);
-		if (menu->minus == 0)
-			temp2 = ft_strjoin(temp, s);
-		else if (menu->minus == 1)
-			temp2 = ft_strjoin(s, temp);
-		free(temp);
-		free(s);
-		s = temp2;
-	}
+		s = char_width(menu, s, 1);
 	*str = ft_strdup(s);
 	free(s);
 }
@@ -49,12 +48,7 @@ void	c_string(t_menu *menu, va_list ap, char **str)
 {
 	char	*s;
 	char	*temp;
-	char	*temp2;
-	char	c;
-	int		n;
 
-	n = 0;
-	temp2 = NULL;
 	if (menu->width == -2)
 		menu->width = (int)va_arg(ap, int);
 	if (menu->precision == -2)
@@ -68,18 +62,7 @@ void	c_string(t_menu *menu, va_list ap, char **str)
 		s = temp;
 	}
 	if (menu->width > (int)ft_strlen(s))
-	{
-		c = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
-		n = menu->width - ft_strlen(s);
-		temp = ft_memset(ft_strnew(n), c, n);
-		if (menu->minus == 0)
-			temp2 = ft_strjoin(temp, s);
-		else if (menu->minus == 1)
-			temp2 = ft_strjoin(s, temp);
-		free(s);
-		free(temp);
-		s = temp2;
-	}
+		s = char_width(menu, s, ft_strlen(s));
 	*str = ft_strdup(s);
 	free(s);
 }

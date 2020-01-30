@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:14:52 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/29 14:40:49 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/30 18:40:45 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	create_link(t_menu *menu, const char *form, char delim)
 {
-	int i;
+	int		i;
 
 	i = menu->i;
 	if (menu->head != NULL)
@@ -37,8 +37,6 @@ int	create_link(t_menu *menu, const char *form, char delim)
 
 int	parse_format(const char *format, t_menu *menu, va_list ap)
 {
-	if (ft_strchr(format, '%') == NULL)
-		return (2);
 	while (format[menu->i] != '\0')
 	{
 		if (create_link(menu, format, '%'))
@@ -46,27 +44,22 @@ int	parse_format(const char *format, t_menu *menu, va_list ap)
 		else if (format[menu->i] == '%')
 		{
 			menu->i++;
-			if (!(ft_strchr(menu->symbols, format[menu->i])))
+			if (ft_strchr(menu->symbols, format[menu->i]))
 			{
-				free(menu->head->str);
-				free(menu->head);
-				free(menu);
-				return (1);
+				// printf("char: .%c. i: %d\n", format[menu->i], menu->i);
+				if (!(ft_strchr(menu->conversions, format[menu->i])))
+				{
+					modifiers(format, menu);
+				}
+				// printf("char: .%c. i: %d\n", format[menu->i], menu->i);
+				if (ft_strchr(menu->conversions, format[menu->i]))
+				{
+					conversions(format[menu->i], menu, ap);
+				}
+				else if (format[menu->i] != '\0')
+					menu->i++;
 			}
-			if (!(ft_strchr(menu->conversions, format[menu->i])))
-				modifiers(format, menu);
-			if (ft_strchr(menu->conversions, format[menu->i]))
-				conversions(format[menu->i], menu, ap);
-			else
-			{
-				free(menu->head->str);
-				free(menu->head);
-				free(menu);
-				return (1);
-			}
-			
 		}
 	}
-	menu->link = menu->head;
 	return (0);
 }
