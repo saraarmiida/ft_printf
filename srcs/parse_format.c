@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:14:52 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/30 18:40:45 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/31 18:09:43 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	create_link(t_menu *menu, const char *form, char delim)
 		return (1);
 	if (!(menu->link->str = ft_strndup(&form[i], ft_strclen(form, i, delim))))
 		return (1);
+	menu->link->nul = 0;
 	menu->link->next = NULL;
 	if (menu->head == NULL)
 		menu->head = menu->link;
@@ -46,18 +47,14 @@ int	parse_format(const char *format, t_menu *menu, va_list ap)
 			menu->i++;
 			if (ft_strchr(menu->symbols, format[menu->i]))
 			{
-				// printf("char: .%c. i: %d\n", format[menu->i], menu->i);
 				if (!(ft_strchr(menu->conversions, format[menu->i])))
-				{
 					modifiers(format, menu);
-				}
-				// printf("char: .%c. i: %d\n", format[menu->i], menu->i);
-				if (ft_strchr(menu->conversions, format[menu->i]))
+				if (ft_strchr(menu->conversions, format[menu->i]) != NULL)
 				{
 					conversions(format[menu->i], menu, ap);
-				}
-				else if (format[menu->i] != '\0')
 					menu->i++;
+					zero_menu(menu);
+				}
 			}
 		}
 	}

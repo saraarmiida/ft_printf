@@ -6,7 +6,7 @@
 #    By: spentti <spentti@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/10 14:03:19 by spentti           #+#    #+#              #
-#    Updated: 2020/01/29 15:06:28 by spentti          ###   ########.fr        #
+#    Updated: 2020/01/31 17:53:07 by spentti          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC = srcs/c_char.c \
 		srcs/c_octal.c \
 		srcs/c_pointer.c \
 		srcs/c_unsigned.c \
+		srcs/c_binary.c \
 		srcs/conversions.c \
 		srcs/ft_printf.c \
 		srcs/modifiers.c \
@@ -36,6 +37,7 @@ OBJ = c_char.o \
 		c_octal.o \
 		c_pointer.o \
 		c_unsigned.o \
+		c_binary.o \
 		conversions.o \
 		ft_printf.o \
 		modifiers.o \

@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 18:11:40 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/30 16:44:14 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/31 17:51:07 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 typedef struct		s_link
 {
 	char			*str;
+	int				nul;
 	struct s_link	*next;
 }					t_link;
 
@@ -38,7 +39,7 @@ typedef struct		s_menu
 	int				width;
 	int				precision;
 	int				length;
-	int				null_c;
+	int				len;
 }					t_menu;
 
 int					ft_printf(const char *format, ...);
@@ -46,6 +47,7 @@ int					parse_format(const char *format, t_menu *menu, va_list ap);
 void				conversions(char c, t_menu *menu, va_list ap);
 void				modifiers(const char *format, t_menu *menu);
 
+void				c_binary(t_menu *menu, va_list ap, char **str, char x);
 void				c_char(t_menu *menu, va_list ap, char **str);
 void				c_string(t_menu *menu, va_list ap, char **str);
 void				c_double(t_menu *menu, va_list ap, char **str);
@@ -57,7 +59,7 @@ void				c_unsigned(t_menu *menu, va_list ap, char **str);
 void				percent_sign(t_menu *menu, char **str);
 
 void				zero_menu(t_menu *menu);
-char				*joinlist(t_link *list);
+char				*joinlist(t_link *list, t_menu *menu);
 int					ft_baselen(unsigned long long n, int base);
 char				*ft_itoa_base(unsigned long long n, int base);
 void				get_width(t_menu *menu, char **s);
@@ -65,5 +67,6 @@ void				get_length(unsigned long long *num, va_list ap, t_menu *m);
 char				*ft_ftoa(long double n, int precision, int hash);
 char				*join_free(char *str1, char *str2);
 void				free_multiple(void *s1, void *s2, void *s3);
+void				ft_putmem(char *s, int len);
 
 #endif

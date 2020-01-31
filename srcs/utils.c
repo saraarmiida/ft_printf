@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:13:41 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/30 16:47:06 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/31 16:54:04 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ void	zero_menu(t_menu *menu)
 	menu->length = 0;
 }
 
-char	*ft_putsubstr(char *str, int i, char *sub)
+char	*ft_putsubstr(char *str, int i, char *sub, int len)
 {
 	int	j;
 
 	j = 0;
-	while (sub[j] != '\0')
+	while (j < len)
 	{
 		str[i + j] = sub[j];
 		j++;
@@ -57,28 +57,27 @@ char	*ft_putsubstr(char *str, int i, char *sub)
 	return (str);
 }
 
-char	*joinlist(t_link *head)
+char	*joinlist(t_link *head, t_menu *menu)
 {
 	char	*str;
 	t_link	*link;
 	t_link	*temp;
 	int		i;
-	int		len;
 
-	len = 0;
+	menu->len = 0;
 	i = 0;
 	link = head;
 	while (link != NULL)
 	{
-		len += ft_strlen(link->str);
+		menu->len += ft_strlen(link->str) + link->nul;
 		link = link->next;
 	}
-	if (!(str = ft_strnew(len + 1)))
+	if (!(str = ft_strnew(menu->len + 1)))
 		return (NULL);
-	while (i < len)
+	while (i < menu->len)
 	{
-		str = ft_putsubstr(str, i, head->str);
-		i += ft_strlen(head->str);
+		str = ft_putsubstr(str, i, head->str, ft_strlen(head->str) + head->nul);
+		i += ft_strlen(head->str) + head->nul;
 		temp = head->next;
 		free_multiple(head->str, head, NULL);
 		head = temp;

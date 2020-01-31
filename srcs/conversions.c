@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 13:45:01 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/27 17:30:51 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/31 18:11:12 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	conversions(char c, t_menu *menu, va_list ap)
 	if (!(menu->link->next = (t_link *)malloc(sizeof(t_link))))
 		return ;
 	menu->link = menu->link->next;
+	menu->link->nul = 0;
 	menu->link->next = NULL;
 	if (c == 'c')
 		c_char(menu, ap, &menu->link->str);
@@ -36,6 +37,6 @@ void	conversions(char c, t_menu *menu, va_list ap)
 		c_double(menu, ap, &menu->link->str);
 	else if (c == '%')
 		percent_sign(menu, &menu->link->str);
-	menu->i++;
-	zero_menu(menu);
+	else if (c == 'b')
+		c_binary(menu, ap, &menu->link->str, c);
 }

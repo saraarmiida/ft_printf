@@ -6,13 +6,13 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 12:55:07 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/30 17:05:50 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/31 16:52:48 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-char	*char_width(t_menu *menu, char *s, int len)
+char	*str_width(t_menu *menu, char *s, int len)
 {
 	char	a;
 	int		n;
@@ -21,11 +21,31 @@ char	*char_width(t_menu *menu, char *s, int len)
 	a = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
 	n = menu->width - len;
 	temp = ft_memset(ft_strnew(n), a, n);
-	if (menu->minus == 0)
-		s = join_free(temp, s);
-	else
+	if (menu->minus == 1 && menu->link->nul != 1)
 		s = join_free(s, temp);
+	else
+		s = join_free(temp, s);
 	return (s);
+}
+
+char	*char_width(t_menu *menu, char *s)
+{
+	char	a;
+	int		n;
+	char	*temp;
+
+	a = (menu->minus == 0 && menu->zero != 0 ? '0' : ' ');
+	n = menu->width;
+	temp = ft_memset(ft_strnew(n), a, n);
+	if (menu->minus == 1)
+	{
+		temp[0] = s[0];
+		menu->link->nul += (s[0] == '\0' ? n - 1 : 0);
+	}
+	else
+		temp[n - 1] = s[0];
+	free(s);
+	return (temp);
 }
 
 void	c_char(t_menu *menu, va_list ap, char **str)
@@ -36,12 +56,11 @@ void	c_char(t_menu *menu, va_list ap, char **str)
 	if (menu->width == -2)
 		menu->width = (int)va_arg(ap, int);
 	c = (unsigned char)va_arg(ap, int);
-	s = (c == '\0' ? ft_strdup("^@") : ft_memset(ft_strnew(1), c, 1));
-	menu->null_c = (c == 0 ? 1 : 0);
+	s = ft_memset(ft_strnew(1), c, 1);
+	menu->link->nul += (c == '\0' ? 1 : 0);
 	if (menu->width)
-		s = char_width(menu, s, 1);
-	*str = ft_strdup(s);
-	free(s);
+		s = char_width(menu, s);
+	*str = s;
 }
 
 void	c_string(t_menu *menu, va_list ap, char **str)
@@ -62,7 +81,7 @@ void	c_string(t_menu *menu, va_list ap, char **str)
 		s = temp;
 	}
 	if (menu->width > (int)ft_strlen(s))
-		s = char_width(menu, s, ft_strlen(s));
+		s = str_width(menu, s, ft_strlen(s));
 	*str = ft_strdup(s);
 	free(s);
 }

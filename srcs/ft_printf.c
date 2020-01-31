@@ -6,7 +6,7 @@
 /*   By: spentti <spentti@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 14:34:25 by spentti           #+#    #+#             */
-/*   Updated: 2020/01/30 18:43:49 by spentti          ###   ########.fr       */
+/*   Updated: 2020/01/31 17:48:05 by spentti          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@ t_menu	*create_menu(void)
 
 	if (!(menu = (t_menu *)malloc(sizeof(t_menu))))
 		return (NULL);
-	menu->symbols = "cspdiouxXfy%#-+ .*0123456789hLljz";
-	menu->conversions = "cspdiouxXfy%";
+	menu->symbols = "cspdiouxXfb%#-+ .*0123456789hLljz";
+	menu->conversions = "cspdiouxXfb%";
 	menu->i = 0;
 	menu->head = NULL;
-	menu->null_c = 0;
 	zero_menu(menu);
 	return (menu);
 }
@@ -42,18 +41,15 @@ int		ft_printf(const char *format, ...)
 	if (ft_strchr(format, '%') == NULL)
 	{
 		str = ft_strdup(format);
+		menu->len = ft_strlen(str);
 	}
 	else if ((mode = parse_format(format, menu, ap)) == 1)
-	{
 		return (0);
-	}
 	else
-	{
-		str = joinlist(menu->head);
-	}
-	ft_putstr(str);
+		str = joinlist(menu->head, menu);
+	ft_putmem(str, menu->len);
 	va_end(ap);
-	printed = ft_strlen(str) - menu->null_c;
+	printed = menu->len;
 	free(menu);
 	free(str);
 	return (printed);
